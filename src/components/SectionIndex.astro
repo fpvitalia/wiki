@@ -1,0 +1,48 @@
+---
+// Elenca gli articoli (non-draft) di una sezione/cartella come card.
+// Se la sezione è ancora vuota mostra un messaggio "in arrivo".
+import { getCollection } from 'astro:content';
+
+interface Props {
+  dir: string; // es. "guide", "recensioni", "normativa", "dove-comprare"
+}
+
+const { dir } = Astro.props;
+
+const fmt = new Intl.DateTimeFormat('it-IT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+const entries = await getCollection('docs', ({ data }) => !data.draft);
+const articles = entries
+  .filter((e) => e.id.startsWith(`${dir}/`) && !e.id.endsWith('/index'))
+  .sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
+---
+
+<div class="not-content">
+  {
+    articles.length > 0 ? (
+      <div class="home-grid">
+        {articles.map((a) => (
+          <a class="home-card" href={`/${a.id}/`}>
+            <h3 class="home-card__title">{a.data.title}</h3>
+            {a.data.description && <p class="home-card__desc">{a.data.description}</p>}
+            <span class="home-card__meta">
+              {a.data.date && (
+                <time datetime={a.data.date.toISOString()}>{fmt.format(a.data.date)}</time>
+              )}
+              {a.data.author && <span>di {a.data.author}</span>}
+            </span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="section-empty">
+        📝 Questa sezione è <strong>in arrivo</strong>. Stiamo preparando i primi
+        contenuti, torna presto oppure <a href="/contribuisci/">scrivila tu</a>!
+      </p>
+    )
+  }
+</div>

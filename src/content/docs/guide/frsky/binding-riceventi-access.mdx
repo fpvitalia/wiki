@@ -1,0 +1,110 @@
+---
+title: "Binding riceventi FrSky ACCESS"
+description: "Procedura passo-passo per il binding delle riceventi FrSky con protocollo ACCESS: registrazione della ricevente, binding e scelta del protocollo (SBUS/F.PORT)."
+author: "Cerix"
+date: 2022-11-20
+updated: 2026-06-17
+tags: ["frsky", "access", "binding", "riceventi", "guida"]
+category: "guide"
+difficulty: "intermedio"
+image: "/images/guide/frsky/binding-riceventi-access/cover.png"
+sidebar:
+  order: 3
+draft: false
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Il protocollo **ACCESS** è la versione più recente di FrSky: rispetto ad ACCST
+aggiunge una fase di **registrazione** della ricevente prima del binding vero e
+proprio. La procedura è quindi leggermente più lunga.
+
+![Schermata iniziale della radio](/images/guide/frsky/binding-riceventi-access/00-main-screen.png)
+
+## Step 0: Aggiorna la ricevente
+
+Assicurati che la ricevente **e** il modulo RF interno del radiocomando siano
+aggiornati all'ultimo firmware disponibile. Scaricalo dalla pagina ufficiale
+delle [riceventi FrSky](https://www.frsky-rc.com/product-category/receivers/).
+
+## Step 1: Binding Mode
+
+Alimenta la ricevente tenendo premuto il pulsante di **Binding** per qualche
+secondo: entra in modalità binding. L'operazione è riuscita quando i LED
+**rosso e verde** restano accesi fissi (non lampeggianti).
+
+![Ricevente in Binding Mode](/images/guide/frsky/binding-riceventi-access/01-binding-mode.jpg)
+
+## Step 2: Registrazione della ricevente
+
+<Steps>
+
+1. Entra nel **MENU** della radio FrSky.
+
+2. Premi **PAGE** fino alla pagina **2 Model Setup**.
+
+3. Scorri fino a **Internal RF** e imposta:
+   - **Mode:** ACCESS
+   - **Channel Range:** CH1-24 (21ms)
+   - **Receiver No:** 01
+   - **Failsafe mode:** No pulses
+
+   ![Model Setup per la registrazione ACCESS](/images/guide/frsky/binding-riceventi-access/02-model-setup-register.png)
+
+4. Con la ricevente in Binding Mode, premi **REGISTER** e conferma con **ENTER**.
+
+   ![Registrazione in corso](/images/guide/frsky/binding-riceventi-access/03-register.png)
+
+5. I LED rosso e verde **lampeggiano**: la registrazione è andata a buon fine.
+   Spegni la ricevente.
+
+   ![Registrazione completata](/images/guide/frsky/binding-riceventi-access/04-registration-ok.png)
+
+</Steps>
+
+## Step 3: Binding della ricevente
+
+<Steps>
+
+1. Alla voce **Receiver 1** premi **BIND**.
+
+   ![Avvio del binding](/images/guide/frsky/binding-riceventi-access/05-press-bind.png)
+
+2. Accendi la ricevente normalmente (senza tenere premuto Bind).
+
+   ![Attesa della ricevente](/images/guide/frsky/binding-riceventi-access/06-wait-for-rx.png)
+
+3. La radio individua la ricevente: premi la rotella per confermare.
+
+   ![Ricevente individuata](/images/guide/frsky/binding-riceventi-access/07-rx-found.png)
+
+4. Un **LED verde fisso** più un **LED blu fisso** confermano il successo.
+
+   ![Binding completato](/images/guide/frsky/binding-riceventi-access/08-bind-successful.png)
+
+</Steps>
+
+## Step 4: Imposta il protocollo
+
+<Steps>
+
+1. Posizionati su **Receiver 1** e premi la rotella per aprire il menu.
+
+   ![Menu opzioni ricevente](/images/guide/frsky/binding-riceventi-access/09-bind-options.png)
+
+2. Seleziona **Options**.
+
+   ![Voce Options](/images/guide/frsky/binding-riceventi-access/10-bind-options-menu.png)
+
+3. Verifica che il protocollo sia quello giusto. I più usati sono **SBUS**
+   oppure **F.PORT**.
+
+   ![Selezione del protocollo della ricevente](/images/guide/frsky/binding-riceventi-access/11-rx-option-protocol.png)
+
+</Steps>
+
+<Aside type="tip">
+Scegli **F.PORT** se vuoi telemetria e controllo su un solo filo; **SBUS** se il
+tuo flight controller è configurato per quello. L'importante è che la stessa
+impostazione sia coerente lato Betaflight.
+</Aside>

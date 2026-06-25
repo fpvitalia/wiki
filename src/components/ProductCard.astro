@@ -1,0 +1,105 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { Icon } from '@astrojs/starlight/components';
+import { getProdotto, getNegozi } from '@/utils/prodotti';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const p = getProdotto(id);
+const negozi = p ? getNegozi(p) : [];
+
+// Risolve l'immagine a build-time: prima cerca public/images/prodotti/<id>.<ext>
+// (es. scaricata da scripts/fetch-product-images.mjs), poi il campo `immagine`
+// del prodotto. Se non c'è nulla, mostra un fallback grafico (non un'img rotta).
+const exists = (rel) => fs.existsSync(path.resolve(process.cwd(), 'public', rel.replace(/^\//, '')));
+function resolveImg() {
+  for (const ext of ['webp', 'avif', 'jpg', 'jpeg', 'png']) {
+    const rel = `/images/prodotti/${id}.${ext}`;
+    if (exists(rel)) return rel;
+  }
+  if (p?.immagine && exists(p.immagine)) return p.immagine;
+  return null;
+}
+const imgSrc = p ? resolveImg() : null;
+
+const valuta = p?.valuta ?? 'EUR';
+const simboloValuta = valuta === 'EUR' ? '€' : ` ${valuta}`;
+---
+
+{
+  p ? (
+    <div class="product-card not-content">
+      <div class="product-card__media">
+        {imgSrc ? (
+          <img class="product-card__img" src={imgSrc} alt={p.nome} loading="lazy" />
+        ) : (
+          <div class="product-card__placeholder" aria-hidden="true">
+            <Icon name="rocket" size="2rem" />
+          </div>
+        )}
+      </div>
+
+      <div class="product-card__body">
+        <div class="product-card__head">
+          <h3 class="product-card__title">{p.nome}</h3>
+          {p.rating && (
+            <span
+              class="product-card__rating"
+              style={`--rating:${p.rating}`}
+              title={`${p.rating} su 5`}
+            >
+              <span class="product-card__stars" aria-hidden="true" />
+              <span class="product-card__rating-num">{p.rating}</span>
+            </span>
+          )}
+        </div>
+
+        {p.descrizione && <p class="product-card__desc">{p.descrizione}</p>}
+
+        {p.tag?.length ? (
+          <ul class="product-card__tags">
+            {p.tag.slice(0, 4).map((t) => (
+              <li class="product-card__tag">#{t}</li>
+            ))}
+          </ul>
+        ) : null}
+
+        <div class="product-card__footer">
+          {p.prezzo_indicativo && (
+            <div class="product-card__price">
+              <span class="product-card__price-label">da</span>
+              <span class="product-card__price-val">
+                {p.prezzo_indicativo}
+                {simboloValuta}
+              </span>
+            </div>
+          )}
+
+          {negozi.length > 0 && (
+            <div class="product-card__actions">
+              {negozi.map((n, i) => (
+                <a
+                  class:list={['product-card__cta', { 'product-card__cta--alt': i > 0 }]}
+                  href={n.url}
+                  target="_blank"
+                  rel="sponsored nofollow noopener"
+                >
+                  {i === 0 ? `Vedi su ${n.label}` : n.label}
+                  <Icon name="external" size="0.95rem" />
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="product-card product-card--missing not-content">
+      Prodotto <code>{id}</code> non trovato in <code>prodotti.yaml</code>.
+    </div>
+  )
+}

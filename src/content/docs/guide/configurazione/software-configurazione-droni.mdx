@@ -1,0 +1,75 @@
+---
+title: "Dove scaricare i software per configurare il drone FPV"
+description: "Raccolta di link ufficiali ai software per configurare droni FPV: configuratori flight controller, tool per riceventi ed ESC, analisi telemetria e driver."
+author: "fpvitalia"
+date: 2019-09-04
+updated: 2026-06-18
+tags: ["software", "configurazione", "betaflight", "download", "guida"]
+category: "guide"
+difficulty: "principiante"
+image: "/images/guide/configurazione/software-configurazione-droni/cover.jpg"
+sidebar:
+  order: 2
+draft: false
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Una raccolta dei software che servono per configurare e mantenere un drone FPV,
+con i **link ufficiali** ai rilasci. Scarica sempre dalle pagine ufficiali per
+evitare versioni modificate o malevole.
+
+## Configuratori flight controller
+
+| Software | Download |
+|---|---|
+| **Betaflight Configurator** | [GitHub releases](https://github.com/betaflight/betaflight-configurator/releases) |
+| EmuFlight | [GitHub releases](https://github.com/emuflight/EmuConfigurator/releases) |
+| iNav Configurator | [GitHub releases](https://github.com/iNavFlight/inav-configurator/releases) |
+| KISS GUI | [GitHub releases](https://github.com/flyduino/kiss-gui/releases) |
+| Cleanflight (legacy) | [GitHub releases](https://github.com/cleanflight/cleanflight-configurator/releases) |
+
+<Aside type="tip">
+Per la stragrande maggioranza dei droni FPV oggi si usa **Betaflight**. Esiste
+anche come app per Chrome/desktop, ma la versione consigliata è il configuratore
+standalone della pagina ufficiale.
+</Aside>
+
+## Tool per le riceventi
+
+| Software | Download |
+|---|---|
+| **ExpressLRS Configurator** | [GitHub releases](https://github.com/ExpressLRS/ExpressLRS-Configurator/releases) |
+| TBS Agent (Crossfire/Tracer) | [Sito ufficiale](https://www.team-blacksheep.com/download/) |
+
+## Tool per gli ESC
+
+| Software | Download |
+|---|---|
+| **ESC Configurator** (BLHeli_S / Bluejay / AM32) | [Apri nel browser](https://esc-configurator.com) |
+| AM32 (firmware 32 bit) | [GitHub](https://github.com/am32-firmware/AM32) |
+| BLHeliSuite32 | [GitHub](https://github.com/bitdump/BLHeli) |
+
+<Aside type="note">
+Lo strumento web **esc-configurator.com** è il più comodo: gira nel browser e
+gestisce sia gli 8 bit (BLHeli_S/Bluejay) sia i 32 bit (AM32). Vedi anche la guida
+[Come scegliere gli ESC](/guide/componenti/come-scegliere-gli-esc/).
+</Aside>
+
+## Analisi della telemetria (blackbox e PID)
+
+| Software | Download |
+|---|---|
+| Blackbox Explorer | [GitHub releases](https://github.com/betaflight/blackbox-log-viewer/releases) |
+| PIDtoolbox | [GitHub releases](https://github.com/bw1129/PIDtoolbox/releases) |
+| PID Analyzer (Plasmatree) | [GitHub releases](https://github.com/Plasmatree/PID-Analyzer/releases) |
+
+## Driver
+
+| Software | Download |
+|---|---|
+| ImpulseRC Driver Fixer | [Sito ufficiale](https://impulserc.com/pages/downloads) |
+
+Se Betaflight non riconosce la flight controller via USB, di solito il problema è
+il **driver**: il Driver Fixer di ImpulseRC risolve la maggior parte dei casi su
+Windows.

@@ -1,0 +1,424 @@
+# Database centralizzato link affiliati FPV Italia
+# REGOLA: cambia il link QUI e si aggiorna su TUTTI gli articoli
+# Categorie: radiocomandi, occhiali, vtx, riceventi, fc, esc, motori, frame, batterie, accessori
+#
+# LINK / NEGOZI:
+#   amazon_it: "..."   -> bottone Amazon (campo storico)
+#   aliexpress: "..."  -> bottone AliExpress (campo storico)
+#   negozi:            -> N negozi extra (drone24hours, chinahobbyline, geprc, ...)
+#     drone24hours: "https://..."
+#     geprc: "https://..."
+# Il primo link diventa il bottone "pieno", gli altri bottoni secondari.
+#
+# TAG AFFILIATE AUTOMATICHE: basta incollare il link PULITO al prodotto. In base
+# al dominio, il sito aggiunge da solo i parametri affiliati (vedi AFFILIATE_RULES
+# in src/utils/prodotti.ts):
+#   amazon.it        -> tag=fpvitalia-21
+#   drone24hours.com -> sca_ref + utm (UpPromote)
+#   chinahobbyline / stonehobby / geprc / sub250 -> ref=fpvitalia (GoAffPro)
+# Se il link ha già quel parametro, non viene sovrascritto. AliExpress e gli short
+# link (amzn.to) restano come li incolli (sono già affiliati).
+
+radiocomandi:
+  
+  radiomaster_pocket:
+    nome: "Radiomaster Pocket ELRS"
+    descrizione: "Radiocomando compatto con ELRS integrato, perfetto per viaggiare"
+    amazon_it: "https://amzn.to/4uHy4Ce"
+    aliexpress: ""
+    negozi:
+      drone24hours: "https://drone24hours.com/collections/radio-fpv/products/radiomaster-pocket-crush-m2"
+    prezzo_indicativo: 79
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/radiomaster-pocket.jpg"
+    tag: [ "radiocomando", "elrs", "compatto" ]
+
+  radiomaster_tx15:
+    nome: "Radiomaster TX15 MAX"
+    descrizione: "Radiocomando Radiomaster TX15 MAX con ExpressLRS integrato"
+    amazon_it: "https://amzn.to/43HDnH6"
+    aliexpress: ""
+    negozi:
+      drone24hours: "https://drone24hours.com/collections/radio-fpv/products/radiomaster-tx15-max"
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/radiomaster-tx15.jpg"
+    tag: [ "radiocomando", "elrs" ]
+
+  radiomaster_boxer:
+    nome: "Radiomaster Boxer ELRS"
+    descrizione: "Radiocomando con form factor gamepad e ELRS"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 119
+    valuta: "EUR"
+    rating: 4.7
+    immagine: "/images/prodotti/radiomaster-boxer.jpg"
+    tag: [ "radiocomando", "elrs" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/radiocomando-boxer-crush-m2
+
+occhiali:
+  dji_goggles_3:
+    nome: "DJI Goggles 3"
+    descrizione: "Occhiali FPV DJI con O4, OLED, bassa latenza"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 449
+    valuta: "EUR"
+    rating: 4.7
+    immagine: "/images/prodotti/dji-goggles-3.jpg"
+    tag: [ "occhiali", "dji", "digitale" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/dji-goggles-3
+
+  dji_goggles_integra:
+    nome: "DJI Goggles Integra"
+    descrizione: "Occhiali integrati con batteria interna"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 399
+    valuta: "EUR"
+    rating: 4.3
+    immagine: "/images/prodotti/dji-goggles-integra.jpg"
+    tag: [ "occhiali", "dji", "digitale" ]
+
+  walksnail_avatar_hd:
+    nome: "Walksnail Avatar HD Goggles"
+    descrizione: "Occhiali Walksnail compatibili con sistema Avatar"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 350
+    valuta: "EUR"
+    rating: 4.4
+    immagine: "/images/prodotti/walksnail-goggles.jpg"
+    tag: [ "occhiali", "walksnail", "digitale" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/walksnail-avatar-hd-goggles-l
+
+  skyzone_04x_pro:
+    nome: "Skyzone SKY04X Pro"
+    descrizione: "Occhiali analogici/digitali con receiver diversity"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 399
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/skyzone-04x-pro.jpg"
+    tag: [ "occhiali", "analogico", "digitale" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/skyzone-sky04x-pro
+
+vtx:
+  dji_o4_air_unit:
+    nome: "DJI O4 Air Unit Pro"
+    descrizione: "VTX digitale DJI di ultima generazione: sensore più grande, 4K a 120 fps, latenza ~15 ms, portata fino a 15 km"
+    amazon_it: "https://amzn.to/4xAVVpT"
+    aliexpress: ""
+    valuta: "EUR"
+    rating: 4.7
+    tag: [ "vtx", "dji", "digitale" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/dji-o4-air-unit-pro
+
+  dji_o3_air_unit:
+    nome: "DJI O3 Air Unit"
+    descrizione: "VTX digitale DJI con camera integrata 4K (generazione precedente)"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 189
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/dji-o3-air-unit.jpg"
+    tag: [ "vtx", "dji", "digitale" ]
+
+  walksnail_avatar_mini:
+    nome: "Walksnail Avatar Mini 1S VTX"
+    descrizione: "VTX Walksnail ultra-compatto per micro quad"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 59
+    valuta: "EUR"
+    rating: 4.3
+    immagine: "/images/prodotti/walksnail-mini.jpg"
+    tag: [ "vtx", "walksnail", "digitale", "micro" ]
+
+  hdzero_freestyle_v2:
+    nome: "HDZero Freestyle V2"
+    descrizione: "VTX HDZero con latenza ultra-bassa per racing"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 79
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/hdzero-freestyle-v2.jpg"
+    tag: [ "vtx", "hdzero", "digitale", "racing" ]
+
+riceventi:
+  betafpv_elrs_nano:
+    nome: "BetaFPV ELRS Nano Receiver"
+    descrizione: "Ricevente ELRS 2.4GHz ultra-leggera"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 15
+    valuta: "EUR"
+    rating: 4.4
+    immagine: "/images/prodotti/betafpv-elrs-nano.jpg"
+    tag: [ "ricevente", "elrs", "nano" ]
+
+  happymodel_ep1:
+    nome: "Happymodel EP1 ELRS"
+    descrizione: "Ricevente ELRS compatta con antenna ceramica"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 12
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/happymodel-ep1.jpg"
+    tag: [ "ricevente", "elrs" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/happymodel-2-4g-expresslrs-elrs-ep1-rx
+
+fc:
+  speedybee_f405_v4:
+    nome: "SpeedyBee F405 V4 Stack"
+    descrizione: "Flight controller + ESC 4-in-1 50A, con Bluetooth"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 69
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/speedybee-f405-v4.jpg"
+    tag: [ "fc", "esc", "stack", "speedybee" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/stack-speedybee-f405-v4-bls-60a-30x30
+
+droni_completi:
+  betafpv_cetus_x:
+    nome: "BetaFPV Cetus X Kit"
+    descrizione: "Kit FPV completo per principianti con drone, occhiali e radiocomando"
+    amazon_it: "https://amzn.to/4aVF3jU"
+    aliexpress: ""
+    prezzo_indicativo: 259
+    valuta: "EUR"
+    rating: 4.2
+    immagine: "/images/prodotti/betafpv-cetus-x.jpg"
+    tag: [ "drone", "kit", "principiante" ]
+
+  geprc_vapor_d5:
+    nome: "GEPRC Vapor D5 HD (O4 Pro)"
+    descrizione: "5 pollici BNF freestyle con DJI O4 Air Unit Pro e GPS, pre-assemblato e pronto al volo"
+    amazon_it: ""
+    aliexpress: ""
+    negozi:
+      drone24hours: "https://drone24hours.com/products/geprc-vapor-d5-hd-o4-pro"
+      geprc: "https://geprc.com/product/geprc-vapor-d5-hd-o4-pro-fpv-drone"
+      aliexpress: "https://it.aliexpress.com/item/1005009073135399.html"
+    valuta: "EUR"
+    rating: 4.6
+    tag: [ "drone", "freestyle", "5-pollici", "dji", "o4" ]
+
+  dji_neo_2:
+    nome: "DJI Neo 2"
+    descrizione: "Mini drone sotto i 250g con 4K e tracking: in FPV (con modulo O4 + occhiali e controller) è l'esperienza più sicura per i principianti"
+    amazon_it: "https://amzn.to/3SOpVi5"
+    aliexpress: ""
+    valuta: "EUR"
+    rating: 4.6
+    tag: [ "drone", "principiante", "sub-250g", "dji" ]
+
+  dji_avata_2:
+    nome: "DJI Avata 2 (Fly More Combo)"
+    descrizione: "Cinewhoop FPV ready-to-fly con Goggles 3 e RC Motion 3, ideale per iniziare"
+    amazon_it: "https://amzn.to/4edBcB2"
+    aliexpress: ""
+    prezzo_indicativo: 999
+    valuta: "EUR"
+    rating: 4.7
+    immagine: "/images/prodotti/dji-avata-2.jpg"
+    tag: [ "drone", "cinewhoop", "kit", "principiante", "dji" ]
+
+batterie:
+  cnhl_2s_300:
+    nome: "CNHL 2S 300mAh (3 pezzi)"
+    descrizione: "Batterie LiPo 2S per tiny whoop e micro drone da interni"
+    amazon_it: ""
+    aliexpress: ""
+    negozi:
+      chinahobbyline: "https://chinahobbyline.com/products/cnhl-ministar-300mah-7-4v-2s-lipo-battery-jst-3pack"
+    valuta: "EUR"
+    rating: 4.4
+    tag: [ "batteria", "lipo", "2s", "micro" ]
+
+  cnhl_6s_1300:
+    nome: "CNHL Black Series V2.0 6S 1300mAh 130C"
+    descrizione: "LiPo 6S per freestyle/racing 5 pollici, ottimo rapporto qualità-prezzo"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 22
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/cnhl-6s-1300.jpg"
+    tag: [ "batteria", "lipo", "6s", "5-pollici" ]
+    negozi:
+      chinahobbyline: https://chinahobbyline.com/products/2-packs-cnhl-black-series-v2-0-1300mah-22-2v-6s-130c-lipo-battery-with-xt60-plug
+
+accessori:
+  hota_d6_pro:
+    nome: "HOTA D6 Pro"
+    descrizione: "Caricabatterie doppio canale per LiPo fino a 6S, bilanciamento affidabile"
+    amazon_it: ""
+    aliexpress: ""
+    negozi:
+      drone24hours: "https://drone24hours.com/products/hota-d6-pro-black-ac-200w-dc-2x325w-15a-caricabatterie-per-batteria-lipo-grigio"
+    prezzo_indicativo: 79
+    valuta: "EUR"
+    rating: 4.7
+    immagine: "/images/prodotti/hota-d6-pro.jpg"
+    tag: [ "caricabatterie", "lipo", "accessorio" ]
+
+  lipo_safe_bag:
+    nome: "Borsa ignifuga LiPo"
+    descrizione: "Sacca anti-incendio per carica e trasporto sicuro delle batterie"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 12
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/lipo-safe-bag.jpg"
+    tag: [ "sicurezza", "lipo", "accessorio" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/borsa-di-sicurezza-lipo-emax-lipo-200-150-150
+
+# Attrezzatura da laboratorio/officina: articoli evergreen per assemblare e
+# riparare i droni (saldatura, pulizia, misura). Link da inserire.
+attrezzatura:
+  saldatore:
+    nome: "Saldatore a stagno a temperatura regolabile"
+    descrizione: "Saldatore a stilo con temperatura regolabile (200-450 °C), per fili motori, connettori e riparazioni elettroniche"
+    amazon_it: "https://amzn.to/4vhGukS"
+    aliexpress: ""
+    valuta: "EUR"
+    rating: 4.5
+    tag: [ "saldatura", "attrezzatura" ]
+
+  stazione_aria_calda:
+    nome: "Stazione ad aria calda SMD (Yihua 858D)"
+    descrizione: "Aria calda regolabile 100-500 °C per dissaldare e lavorare componenti SMD"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 45
+    valuta: "EUR"
+    rating: 4.4
+    immagine: "/images/prodotti/stazione-aria-calda.jpg"
+    tag: [ "saldatura", "smd", "attrezzatura" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/pistola-ad-aria-calda-858d-bga
+
+  stagno_saldante:
+    nome: "Stagno per saldatura 60/40 0,8 mm"
+    descrizione: "Filo di stagno con anima disossidante, diametro fine adatto all'elettronica FPV"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 10
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/stagno-saldante.jpg"
+    tag: [ "saldatura", "consumabile", "attrezzatura" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/tbs-100-g-diametro-0-8-mm
+
+  flussante_saldatura:
+    nome: "Flussante per saldatura"
+    descrizione: "Pasta flussante che migliora la bagnabilità dello stagno e le saldature pulite"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 9
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/flussante.jpg"
+    tag: [ "saldatura", "consumabile", "attrezzatura" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/rosin-flux-pen-10ml
+
+  treccia_dissaldante:
+    nome: "Treccia dissaldante"
+    descrizione: "Calza di rame per rimuovere lo stagno in eccesso dalle piazzole"
+    amazon_it: "https://amzn.to/4xARtaR"
+    aliexpress: ""
+    prezzo_indicativo: 6
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/treccia-dissaldante.jpg"
+    tag: [ "saldatura", "consumabile", "attrezzatura" ]
+
+  alcool_isopropilico:
+    nome: "Alcool isopropilico (IPA) 99,9%"
+    descrizione: "Per pulire i circuiti da residui di flussante, sporco e acqua: indispensabile dopo un crash in acqua"
+    amazon_it: "https://amzn.to/4erdbFl"
+    aliexpress: ""
+    prezzo_indicativo: 12
+    valuta: "EUR"
+    rating: 4.7
+    immagine: "/images/prodotti/alcool-isopropilico.jpg"
+    tag: [ "pulizia", "manutenzione", "attrezzatura" ]
+
+  terza_mano:
+    nome: "Terza mano con morsetti"
+    descrizione: "Supporto con bracci regolabili per tenere ferme schede e cavi mentre saldi"
+    amazon_it: "https://amzn.to/4a4gWPY"
+    aliexpress: ""
+    prezzo_indicativo: 15
+    valuta: "EUR"
+    rating: 4.4
+    immagine: "/images/prodotti/terza-mano.jpg"
+    tag: [ "saldatura", "supporto", "attrezzatura" ]
+
+  multimetro:
+    nome: "Multimetro digitale"
+    descrizione: "Per misurare tensione, continuità e cortocircuiti: utile in ogni build e riparazione"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 25
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/multimetro.jpg"
+    tag: [ "misura", "attrezzatura" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/multimetro-digitale
+
+  pinzette_esd:
+    nome: "Set pinzette ESD antistatiche"
+    descrizione: "Pinzette in acciaio antimagnetiche per maneggiare componenti minuti"
+    amazon_it: ""
+    aliexpress: ""
+    prezzo_indicativo: 10
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/pinzette-esd.jpg"
+    tag: [ "attrezzatura", "supporto" ]
+    negozi:
+      drone24hours: https://drone24hours.com/products/pinzette-antistatiche
+
+  alimentatore_banco:
+    nome: "Alimentatore da banco regolabile 30V/10A"
+    descrizione: "Alimentazione stabile per test e collaudo a banco, con smoke stopper integrabile"
+    amazon_it: "https://amzn.to/4a7rJJ9"
+    aliexpress: ""
+    prezzo_indicativo: 60
+    valuta: "EUR"
+    rating: 4.5
+    immagine: "/images/prodotti/alimentatore-banco.jpg"
+    tag: [ "misura", "attrezzatura" ]
+
+  chiavi_esagonali_fpv:
+    nome: "Set chiavi esagonali FPV (1.5/2/2.5/3 mm)"
+    descrizione: "Hex driver delle misure usate sui droni FPV per viti e dadi motori"
+    amazon_it: "https://amzn.to/4oDxhRt"
+    aliexpress: ""
+    prezzo_indicativo: 14
+    valuta: "EUR"
+    rating: 4.6
+    immagine: "/images/prodotti/chiavi-esagonali-fpv.jpg"
+    tag: [ "attrezzatura", "utensili" ]

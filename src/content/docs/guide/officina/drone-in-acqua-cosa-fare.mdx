@@ -1,0 +1,72 @@
+---
+title: "Drone in acqua? Ecco cosa fare per recuperarlo"
+description: "Il drone è finito in acqua o nella neve? Guida per recuperarlo: stacca subito la batteria, niente riso, pulisci i circuiti con alcool isopropilico contro l'ossido."
+author: "Cerix"
+date: 2020-03-31
+updated: 2026-06-18
+tags: ["manutenzione", "riparazione", "acqua", "pulizia", "guida"]
+category: "guide"
+difficulty: "principiante"
+image: "/images/guide/officina/drone-in-acqua-cosa-fare/cover.gif"
+sidebar:
+  order: 1
+draft: false
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import ProductLink from '@/components/ProductLink.astro';
+import ProductCard from '@/components/ProductCard.astro';
+
+Il tuo drone è finito in mare, in uno stagno, in un fiume o in una pozzanghera? O
+si è riempito di neve? Spesso il contatto con l'acqua **non** provoca un
+cortocircuito immediato, perché l'elettronica di bordo lavora a basse tensioni.
+Hai buone probabilità di recuperarlo, ma devi agire bene e in fretta.
+
+## 1. Stacca subito la batteria
+
+La primissima cosa: recupera il drone e **togli l'alimentazione staccando la
+batteria**. Finché c'è corrente, l'acqua può creare cortocircuiti.
+
+<Aside type="caution" title="Niente riso, è una bufala">
+Il sacchetto di riso **non serve**: non assorbe l'acqua dai circuiti e, soprattutto,
+non ferma la **corrosione** che si forma nei giorni successivi. Non perdere tempo
+con i rimedi casalinghi.
+</Aside>
+
+<Aside type="danger" title="Acqua salata">
+L'acqua di **mare** è più aggressiva perché il sale corrode i circuiti. Se il drone è
+caduto in acqua salata, **sciacqualo prima con acqua dolce** per togliere il sale,
+poi procedi con la pulizia all'alcool qui sotto.
+</Aside>
+
+## 2. Il vero nemico è l'ossido
+
+Anche asciugando con un phon, nei giorni successivi può formarsi **ossido**,
+soprattutto sotto i componenti SMD. L'unico modo per scongiurarlo è **pulire** le
+parti bagnate con **alcool isopropilico** (IPA) o alcool denaturato.
+
+![Ossido formatosi dopo il contatto con l'acqua](/images/guide/officina/drone-in-acqua-cosa-fare/corrosione.jpg)
+
+<ProductCard id="alcool_isopropilico" />
+
+## 3. Procedura di pulizia
+
+1. **Smonta** il drone.
+2. Versa **piccole quantità** di <ProductLink id="alcool_isopropilico" /> sulle
+   componenti elettroniche (FC, ESC, VTX, camera...).
+3. Con un **pennellino** o un vecchio spazzolino, spazzola delicatamente i circuiti.
+4. L'alcool **evapora** portando via acqua, sporco e residui.
+5. **Non** mettere le componenti a bagno nell'alcool: ne basta poco, applicato a mano.
+
+## 4. Asciuga bene, poi riprova
+
+Dopo la pulizia, lascia asciugare i componenti in un luogo **asciutto e ventilato**
+finché non sono **completamente asciutti** (l'alcool evapora in fretta). Niente fonti
+di calore come forno o phon bollente. Quando è tutto asciutto, rimonta e riprova: se
+il contatto con l'acqua non ha causato cortocircuiti, con ogni probabilità tornerai a
+volare.
+
+<Aside type="caution">
+Fai la **pulizia il prima possibile**: l'ossido può danneggiare in modo permanente le
+schede elettroniche.
+</Aside>

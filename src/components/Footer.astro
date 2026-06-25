@@ -1,0 +1,25 @@
+---
+// Override del Footer Starlight: mantiene quello di default (paginazione,
+// "ultimo aggiornamento", edit link) e aggiunge la disclosure affiliati
+// obbligatoria, in modo discreto e su tutte le pagine.
+import Default from '@astrojs/starlight/components/Footer.astro';
+---
+
+<Default><slot /></Default>
+
+<p class="site-affiliate-disclosure">
+  Questo sito contiene link affiliati: acquistando tramite questi link FPV Italia
+  può ricevere una piccola commissione, senza alcun costo aggiuntivo per te.
+</p>
+
+<style>
+  .site-affiliate-disclosure {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    color: var(--sl-color-gray-4);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+// I 4 box sotto l'hero: stesso look delle Card di Starlight (icona colorata,
+// 2 colonne con effetto "stagger") ma cliccabili verso le sezioni.
+import { Icon } from '@astrojs/starlight/components';
+
+const sezioni = [
+  {
+    icon: 'setting',
+    title: 'Guide tecniche',
+    desc: 'Betaflight, ELRS, build e tuning spiegati passo-passo.',
+    href: '/guide/',
+  },
+  {
+    icon: 'star',
+    title: 'Recensioni',
+    desc: 'Occhiali, radiocomandi e droni testati sul campo.',
+    href: '/recensioni/',
+  },
+  {
+    icon: 'approve-check',
+    title: 'Normativa',
+    desc: 'Regole ENAC/EASA per volare in regola in Italia.',
+    href: '/normativa/',
+  },
+  {
+    icon: 'open-book',
+    title: 'Dove comprare',
+    desc: 'I migliori negozi e prodotti consigliati dalla community.',
+    href: '/dove-comprare/',
+  },
+] as const;
+---
+
+<div class="home-cards not-content">
+  {
+    sezioni.map((s) => (
+      <a class="home-cardlink" href={s.href}>
+        <span class="home-cardlink__title">
+          <Icon name={s.icon} class="home-cardlink__icon" size="1.333em" />
+          <span>{s.title}</span>
+        </span>
+        <span class="home-cardlink__body">{s.desc}</span>
+      </a>
+    ))
+  }
+</div>

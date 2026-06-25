@@ -1,0 +1,27 @@
+---
+// CTA community: invito al forum + contributi. (Niente newsletter per ora:
+// il box verrà riaggiunto quando ci sarà un provider a cui collegarlo.)
+import { Icon } from '@astrojs/starlight/components';
+---
+
+<section class="home-community">
+  <div class="home-cta__card">
+    <span class="home-cta__icon"><Icon name="comment-alt" size="1.7rem" /></span>
+    <h3 class="home-cta__title">Unisciti alla community FPV italiana</h3>
+    <p class="home-cta__text">
+      Domande, build, consigli e troubleshooting: confrontati con altri piloti,
+      mostra i tuoi voli e contribuisci a migliorare le guide del sito.
+    </p>
+    <div class="home-cta__actions">
+      <a class="home-cta__btn" href="/community-droni-fpv-italia/">
+        <Icon name="open-book" size="1.1rem" /> Scopri la community
+      </a>
+      <a class="home-cta__btn" href="https://forum.fpvitalia.com">
+        <Icon name="comment" size="1.1rem" /> Vai al forum
+      </a>
+      <a class="home-cta__btn home-cta__btn--ghost" href="https://github.com/fpvitalia/wiki">
+        <Icon name="github" size="1.1rem" /> Contribuisci
+      </a>
+    </div>
+  </div>
+</section>

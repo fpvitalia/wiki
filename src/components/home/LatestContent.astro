@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+
+const CAT: Record<string, string> = {
+  guide: 'Guida',
+  recensioni: 'Recensione',
+};
+
+const fmt = new Intl.DateTimeFormat('it-IT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+const entries = await getCollection('docs', ({ data }) => !data.draft);
+const articles = entries
+  .filter(
+    (e) =>
+      (e.id.startsWith('guide/') || e.id.startsWith('recensioni/')) &&
+      !e.id.endsWith('/index')
+  )
+  .sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0))
+  .slice(0, 6);
+---
+
+{
+  articles.length > 0 && (
+    <section class="home-section">
+      <div class="home-section__head">
+        <h2 class="home-section__title">Ultime guide &amp; recensioni</h2>
+        <p class="home-section__sub">Gli ultimi contenuti pubblicati dalla community.</p>
+      </div>
+      <div class="home-grid">
+        {articles.map((a) => {
+          const cat = a.id.split('/')[0];
+          return (
+            <a class="home-card" href={`/${a.id}/`}>
+              <span class={`home-badge home-badge--${cat}`}>{CAT[cat] ?? cat}</span>
+              <h3 class="home-card__title">{a.data.title}</h3>
+              {a.data.description && <p class="home-card__desc">{a.data.description}</p>}
+              <span class="home-card__meta">
+                {a.data.date && (
+                  <time datetime={a.data.date.toISOString()}>{fmt.format(a.data.date)}</time>
+                )}
+                {a.data.author && <span>di {a.data.author}</span>}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  )
+}

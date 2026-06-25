@@ -1,0 +1,197 @@
+---
+title: Contribuisci a FPV Italia
+description: "Come scrivere guide e recensioni su FPV Italia direttamente da GitHub: flusso a Pull Request, immagini e regole. Non serve installare niente."
+ads: false
+---
+
+import { Steps, Aside, FileTree, LinkButton } from '@astrojs/starlight/components';
+
+FPV Italia è un progetto **open content**: le guide e le recensioni le scrive la
+community italiana del volo FPV. Ogni contributo è benvenuto: per partecipare
+ti basta un **account GitHub**, senza installare nulla, si fa tutto dal browser.
+
+I contenuti del sito sono semplici **file Markdown** nel repository. Quando
+proponi una modifica parte una **Pull Request** che il team revisiona e pubblica:
+così manteniamo qualità e coerenza, ma chiunque può proporre.
+
+<LinkButton href="https://github.com/fpvitalia/wiki" icon="external" variant="secondary">
+  Vai al repository su GitHub
+</LinkButton>
+
+## Correggere o migliorare una pagina
+
+Il modo più veloce per sistemare un errore o aggiungere un dettaglio:
+
+<Steps>
+
+1. Apri la pagina sul sito e clicca **"Modifica questa pagina"** in fondo: ti
+   porta direttamente all'editor di GitHub, sul file giusto.
+
+2. Modifica il testo.
+
+3. In fondo scegli **"Create a new branch… and start a pull request"** e clicca
+   **Propose changes**.
+
+4. Un membro del team revisiona e pubblica. 🎉
+
+</Steps>
+
+## Scrivere un nuovo articolo
+
+<Steps>
+
+1. Sul repository apri la cartella della categoria giusta:
+   - Guide → `src/content/docs/guide/`
+   - Recensioni → `src/content/docs/recensioni/`
+   - Normativa → `src/content/docs/normativa/`
+   - Dove comprare → `src/content/docs/dove-comprare/`
+
+2. Clicca **Add file → Create new file**.
+
+3. Dai un nome al file: tutto **minuscolo**, parole separate da **trattini**,
+   con estensione `.md` (es. `come-scegliere-le-eliche.md`). Il nome del file
+   diventa l'indirizzo (URL) dell'articolo.
+
+4. Incolla il template qui sotto, scrivi il tuo contenuto, poi
+   **Commit changes → Create a new branch and start a pull request**.
+
+</Steps>
+
+```yaml
+---
+title: "Titolo della guida"
+description: "Descrizione breve (max 160 caratteri) per i motori di ricerca"
+author: "tuo-username-github"
+date: 2026-01-01
+tags: ["tag1", "tag2"]
+category: "guide"          # guide | recensioni | normativa | dove-comprare
+difficulty: "intermedio"   # principiante | intermedio | avanzato
+image: "/images/guide/nome-articolo/cover.jpg"
+draft: false
+---
+
+Testo introduttivo…
+
+## Primo capitolo
+
+Contenuto…
+```
+
+<Aside type="tip">
+Usa `.md` per il testo normale. Serve `.mdx` **solo** se inserisci le schede
+prodotto `<ProductCard>` / `<ProductLink>` (vedi più sotto).
+</Aside>
+
+## Immagini: dove metterle e come inserirle
+
+Questa è la parte che genera più dubbi, quindi spieghiamola con calma.
+
+### Dove vanno
+
+Le immagini stanno in `public/images/` e, per non fare confusione, **ogni
+articolo ha la sua cartella**, dentro la categoria, con lo stesso nome del file
+dell'articolo:
+
+<FileTree>
+
+- public/images/
+  - guide/
+    - come-scegliere-le-eliche/ **← cartella di questo articolo**
+      - cover.jpg
+      - elica-tripala.jpg
+      - confronto-misure.jpg
+    - come-iniziare-droni-fpv/
+      - cover.jpg
+  - recensioni/
+    - dji-goggles-3/
+      - cover.jpg
+  - prodotti/ le foto prodotto le gestisce il team
+
+</FileTree>
+
+### Come si linkano nell'articolo
+
+Una volta che l'immagine è nella sua cartella, la richiami con un percorso
+**assoluto** che parte da `/images/...` (senza la parte `public/`):
+
+```markdown
+![Elica tripala da 5 pollici](/images/guide/come-scegliere-le-eliche/elica-tripala.jpg)
+```
+
+Il testo tra parentesi quadre è la **descrizione** dell'immagine (per
+accessibilità e SEO): scrivila sempre. Per la copertina ("hero") in cima
+all'articolo, invece, usa il campo `image:` nel front matter.
+
+<Aside type="caution" title="Nomi dei file">
+Tutto minuscolo, con i trattini, senza spazi né accenti.
+✅ `elica-tripala.jpg`  ❌ `Elica Tripala.JPG`. Il nome nel link deve essere
+identico a quello del file caricato (maiuscole/minuscole comprese).
+</Aside>
+
+### Come aggiungerle da GitHub
+
+Tre modi: i primi due sono i più semplici, il terzo è per chi se la cava.
+
+<Steps>
+
+1. **Trascinale dentro la Pull Request** *(il più facile)*: mentre scrivi la
+   descrizione della PR, trascina l'immagine nel riquadro di testo, GitHub la
+   carica da sola. Allegale tutte indicando dove vanno, e le sistemiamo noi nella
+   cartella dell'articolo in revisione.
+
+2. **Lascia un promemoria**: nel punto dove vuoi l'immagine scrivi
+   `<!-- IMMAGINE: foto del Radiomaster Boxer dall'alto -->`. La inseriamo noi.
+
+3. **Caricale tu nella cartella dell'articolo**, se sai muoverti su GitHub:
+   crea prima la cartella (Add file → Create new file con un percorso tipo
+   `public/images/guide/nome-articolo/.gitkeep`), poi entra nella cartella e usa
+   Add file → Upload files.
+
+</Steps>
+
+<Aside type="tip">
+Non bloccarti sulle immagini: **meglio un buon articolo senza immagini che
+nessun articolo.** Se non te la senti, usa il metodo 1 o 2 e ci pensiamo noi.
+</Aside>
+
+## Consigliare prodotti
+
+Per citare o consigliare un prodotto non incollare link diretti ai negozi: usa i
+componenti dedicati, che creano una scheda o un link curato e uniforme (richiede
+estensione `.mdx`):
+
+```mdx
+import ProductCard from '@/components/ProductCard.astro';
+import ProductLink from '@/components/ProductLink.astro';
+
+<ProductCard id="radiomaster_tx15" />
+
+Il <ProductLink id="radiomaster_tx15" /> è perfetto per iniziare.
+```
+
+I prodotti disponibili sono elencati in `src/data/prodotti.yaml`. Per proporne
+uno nuovo, segnalalo nella tua Pull Request: all'immagine della scheda pensa il
+sito.
+
+## Cosa NON includere
+
+- Contenuti copiati da altri siti
+- Link diretti a negozi (usa i componenti per i prodotti)
+- Contenuti promozionali non dichiarati
+- Informazioni su come aggirare la normativa sui droni
+- Contenuti non correlati al mondo FPV/droni
+
+## Licenza e attribuzione
+
+Contribuendo accetti il nostro **Contributor License Agreement**: in breve,
+concedi a FPV Italia di pubblicare e modificare il tuo contenuto, mantieni i tuoi
+diritti d'autore (puoi ripubblicarlo altrove dopo 30 giorni) e ogni articolo
+riporta il tuo nome con link al profilo GitHub. I dettagli completi sono nel file
+[CONTRIBUTING.md](https://github.com/fpvitalia/wiki/blob/main/CONTRIBUTING.md)
+del repository.
+
+## Domande?
+
+Apri una [issue su GitHub](https://github.com/fpvitalia/wiki/issues) o fai un
+salto sul [forum](https://forum.fpvitalia.com): la community italiana è il modo
+più veloce per risolvere ogni dubbio. Buoni voli! 🚁

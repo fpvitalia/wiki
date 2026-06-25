@@ -1,0 +1,67 @@
+---
+title: "Come bindare le riceventi FrSky"
+description: "Guida al binding delle riceventi FrSky: differenze tra i protocolli ACCST e ACCESS e link alle procedure passo-passo per ogni tipo di ricevente."
+author: "fpvitalia"
+date: 2022-11-26
+updated: 2026-06-17
+tags: ["frsky", "binding", "riceventi", "radiocomando", "guida"]
+category: "guide"
+difficulty: "intermedio"
+image: "/images/guide/frsky/come-bindare-frsky/cover.png"
+sidebar:
+  order: 1
+draft: false
+---
+
+import { Aside, LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Le istruzioni ufficiali per bindare le riceventi FrSky sono spesso confuse e
+criptiche. In questa sezione trovi le procedure spiegate passo-passo, divise per
+**protocollo**: la cosa più importante da capire prima di iniziare.
+
+<Aside type="note" title="FrSky nel 2026">
+FrSky è stato per anni lo standard dei radiocomandi FPV. Oggi molti piloti usano
+**ExpressLRS (ELRS)**, ma le riceventi FrSky restano diffusissime su radio
+Taranis, Horus e su molti modelli già in volo: queste guide servono proprio a chi
+ha quell'hardware.
+</Aside>
+
+## Quale protocollo ho?
+
+Le riceventi FrSky usano due protocolli principali, **non compatibili tra loro**.
+La procedura di binding cambia di conseguenza:
+
+- **ACCST**: il protocollo "storico" (D8/D16), usato dalla maggior parte delle
+  riceventi più vecchie (X4R, X6R, X8R, XSR, XM+, R-XSR…).
+- **ACCESS**: il protocollo più recente, con registrazione della ricevente,
+  più canali e maggiore sicurezza (riceventi della serie più nuova, es. R-XSR
+  ACCESS, Archer, ecc.).
+
+In caso di dubbio, controlla il modello esatto della tua ricevente sul sito
+FrSky: indica quale firmware/protocollo supporta.
+
+## Le guide passo-passo
+
+<CardGrid>
+  <LinkCard
+    title="Binding riceventi ACCST"
+    description="Procedura per il protocollo storico D8/D16, anche su radio non FrSky (RadioMaster)."
+    href="/guide/frsky/binding-riceventi-accst/"
+  />
+  <LinkCard
+    title="Binding riceventi ACCESS"
+    description="Procedura con registrazione della ricevente per il protocollo più recente."
+    href="/guide/frsky/binding-riceventi-access/"
+  />
+  <LinkCard
+    title="Binding ricevente X8R (Taranis)"
+    description="Caso specifico della X8R con i ponticelli e le 5 modalità di binding."
+    href="/guide/frsky/binding-ricevente-x8r/"
+  />
+</CardGrid>
+
+<Aside type="tip">
+Prima di qualsiasi binding, aggiorna **sia la ricevente sia il modulo RF interno**
+del radiocomando all'ultimo firmware: gran parte dei problemi di binding nasce da
+firmware disallineati.
+</Aside>

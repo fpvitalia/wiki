@@ -1,0 +1,26 @@
+---
+import { getProdotto, getPrimaryLink } from '@/utils/prodotti';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const p = getProdotto(id);
+const href = p ? getPrimaryLink(p) : undefined;
+---
+
+{
+  p && href ? (
+    <a
+      href={href}
+      class="product-link"
+      target="_blank"
+      rel="sponsored nofollow noopener"
+    >
+      {p.nome}
+    </a>
+  ) : (
+    <span class="product-link product-link--missing">{p?.nome ?? `[prodotto "${id}" non trovato]`}</span>
+  )
+}

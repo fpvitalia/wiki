@@ -1,0 +1,98 @@
+---
+// Override del componente Head di Starlight. Aggiunge due cose al <head> di
+// default (title, meta, OG, canonical, generati già da Starlight):
+//
+//  1. JSON-LD (schema.org) generato automaticamente per ogni pagina:
+//     - articoli (guide/recensioni, cioè pagine con `date`) → Article
+//     - homepage → WebSite + Organization
+//     Legge i campi dal front matter (title, description, author, date, updated,
+//     image): nessun intervento manuale per pagina. I campi mancanti sono omessi.
+//
+//  2. lo script AdSense globale, solo se ADSENSE_CLIENT è impostato in src/config.mjs.
+import Default from '@astrojs/starlight/components/Head.astro';
+
+import { ADSENSE_CLIENT, GA4_ID } from '@/config.mjs';
+const adsenseEnabled = Boolean(ADSENSE_CLIENT) && import.meta.env.PROD;
+const ga4Enabled = Boolean(GA4_ID) && import.meta.env.PROD;
+
+const site = Astro.site; // https://fpvitalia.com (da astro.config)
+const ORG = { '@type': 'Organization', name: 'FPV Italia', url: site?.href };
+
+const route = Astro.locals.starlightRoute;
+const data = route?.entry?.data;
+const isHome = Astro.url.pathname === '/';
+const canonical = site ? new URL(Astro.url.pathname, site).href : Astro.url.href;
+const abs = (path) => (path && site ? new URL(path, site).href : undefined);
+
+/** @type {Record<string, unknown> | Array<Record<string, unknown>> | undefined} */
+let jsonLd;
+
+if (isHome) {
+  jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'FPV Italia',
+      description: data?.description,
+      url: site?.href,
+      inLanguage: 'it',
+    },
+    { '@context': 'https://schema.org', ...ORG },
+  ];
+} else if (data?.date) {
+  // Pagina-articolo (guide e recensioni hanno `date`).
+  const author = typeof data.author === 'string' ? data.author : undefined;
+  const image = abs(data.image);
+  jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: data.title,
+    description: data.description,
+    inLanguage: 'it',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    datePublished: new Date(data.date).toISOString(),
+    dateModified: new Date(data.updated ?? data.date).toISOString(),
+    ...(image && { image }),
+    ...(author && { author: { '@type': 'Person', name: author } }),
+    publisher: ORG,
+  };
+}
+---
+
+<script is:inline>
+  (() => {
+    try {
+      if (localStorage.getItem('fpvitalia-sidebar-collapsed') === 'true') {
+        document.documentElement.setAttribute('data-sidebar-collapsed', '');
+      }
+    } catch {}
+  })();
+</script>
+
+<Default><slot /></Default>
+
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+{
+  adsenseEnabled && (
+    <script
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+      crossorigin="anonymous"
+    />
+  )
+}
+
+{
+  ga4Enabled && (
+    <Fragment>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} />
+      <script is:inline define:vars={{ GA4_ID }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', GA4_ID);
+      </script>
+    </Fragment>
+  )
+}

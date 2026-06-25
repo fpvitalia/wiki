@@ -1,0 +1,245 @@
+---
+title: "VTX per droni FPV: cos'è, come funziona e quale scegliere"
+description: "Guida alla VTX per droni FPV: cosa fa, potenza, frequenze, canali, antenne, surriscaldamento, analogico vs digitale e problemi comuni."
+author: "fpvitalia"
+date: 2026-06-25
+updated: 2026-06-25
+tags: ["vtx", "video", "componenti", "analogico", "digitale", "guida"]
+category: "guide"
+difficulty: "principiante"
+readingTime: 13
+draft: false
+---
+
+La **VTX** (*Video Transmitter*) è il trasmettitore video del drone FPV: prende
+il segnale della camera e lo invia agli occhiali o al ricevitore video. Senza VTX
+non hai il video in tempo reale, quindi non puoi pilotare in FPV.
+
+In una build analogica la VTX è un componente separato, collegato alla camera, alla
+flight controller e all'antenna. Nei sistemi digitali moderni, come DJI O3/O4,
+Walksnail o HDZero, la parte VTX è integrata nell'unità video.
+
+:::caution[Mai senza antenna]
+Non alimentare mai una VTX senza antenna collegata. Il segnale non ha dove
+scaricarsi, la VTX si surriscalda molto rapidamente e può bruciarsi.
+:::
+
+## A cosa serve la VTX
+
+La VTX trasmette il video dal drone verso gli occhiali. Nel percorso completo ci
+sono quattro elementi:
+
+1. **Camera FPV**: riprende l'immagine davanti al drone.
+2. **Flight controller**: può aggiungere OSD, cioè dati a schermo come tensione
+   batteria, timer, modalità di volo e RSSI/LQ.
+3. **VTX**: trasmette il segnale video.
+4. **Antenna**: irradia il segnale verso gli occhiali.
+
+Se uno di questi elementi è configurato male, il risultato può essere schermo
+nero, video disturbato, portata scarsa o VTX molto calda.
+
+## Potenza: 25 mW, 200 mW, 800 mW e oltre
+
+La potenza della VTX si misura in **mW**. Più potenza non significa sempre video
+migliore: aumenta la portata potenziale, ma aumenta anche calore, consumo e
+disturbo verso altri piloti.
+
+Quando si parla di normativa, però, il numero importante è spesso la **e.i.r.p.**
+(*Equivalent Isotropically Radiated Power*): non è solo la potenza impostata nella
+VTX, ma la potenza effettivamente irradiata considerando anche guadagno
+dell'antenna, cavi e connettori. Una VTX impostata a 25 mW con un'antenna ad alto
+guadagno può superare il limite e.i.r.p. consentito.
+
+| Potenza | Uso tipico | Note pratiche |
+|---|---|---|
+| **25 mW** | indoor, gare, test al banco | scalda poco e disturba meno gli altri |
+| **200 mW** | park flying, micro e voli vicini | buon compromesso per iniziare |
+| **400 mW** | freestyle in spazi aperti | più margine con ostacoli leggeri |
+| **800 mW** | freestyle più esteso | richiede buona antenna e raffreddamento |
+| **1 W+** | long range e casi specifici | non serve per la maggior parte dei piloti |
+
+Per i primi voli non partire dalla potenza massima. Se il video è instabile, prima
+controlla antenna, canale, alimentazione e orientamento delle antenne.
+
+## Frequenze, bande e canali
+
+La maggior parte delle VTX analogiche FPV lavora a **5.8 GHz**. All'interno di
+questa banda esistono gruppi di canali, spesso chiamati Band A, B, E, F, Raceband
+e simili.
+
+Quando voli con altre persone, la scelta del canale è fondamentale: due piloti sul
+medesimo canale, o su canali troppo vicini, possono disturbarsi a vicenda. Per
+questo in gruppo si coordinano sempre canali e potenze prima di decollare.
+
+## Normativa in Italia: frequenze e potenza senza patente radioamatoriale
+
+In Italia, per un uso senza patente radioamatoriale e senza autorizzazioni
+specifiche, il riferimento pratico per le VTX FPV a 5.8 GHz è usare apparati
+conformi CE nella banda **5725-5875 MHz**, con potenza massima **25 mW e.i.r.p.**
+
+Quindi la risposta breve è: **senza patente radioamatoriale resta a 25 mW e.i.r.p.**
+e usa solo canali dentro 5725-5875 MHz. Non è corretto parlare solo di "frequenza
+massima": il limite riguarda insieme **banda, potenza irradiata e conformità
+dell'apparato**.
+
+| Caso | Indicazione prudente |
+|---|---|
+| Volo FPV ricreativo senza patente radioamatoriale | 5725-5875 MHz, massimo 25 mW e.i.r.p., apparato CE |
+| VTX impostata a 200/400/800 mW | da considerare fuori dal normale uso libero |
+| Canali fuori 5725-5875 MHz | da evitare senza titolo/autorizzazione idonea |
+| Antenne ad alto guadagno | attenzione: possono far superare 25 mW e.i.r.p. |
+
+Le frequenze radio non sono "libere" solo perché la VTX permette di selezionarle:
+molti trasmettitori FPV venduti online hanno canali e potenze pensati per mercati
+diversi. Prima di volare in Italia conviene bloccare la VTX sui canali consentiti
+e impostare la potenza minima necessaria.
+
+### Patente radioamatoriale: cosa cambia davvero?
+
+La patente radioamatoriale non è una scorciatoia generica per usare qualunque VTX
+alla massima potenza. Le bande assegnate al servizio di radioamatore hanno regole
+proprie: identificazione della stazione, finalità non commerciali, limiti di banda,
+modi consentiti e compatibilità con altri servizi.
+
+Per questo, nella pratica FPV, l'indicazione più sicura per chi vola senza un
+inquadramento radio specifico resta: **VTX CE, 5.8 GHz nella banda 5725-5875 MHz,
+25 mW e.i.r.p.**
+
+:::caution[Controlla sempre la situazione aggiornata]
+Questa sezione è una guida pratica, non consulenza legale. Per eventi, gare, voli
+organizzati o potenze superiori, verifica le regole aggiornate con le fonti
+ufficiali e con chi gestisce l'area di volo.
+:::
+
+## SmartAudio, Tramp e controllo da Betaflight
+
+Molte VTX analogiche possono essere controllate dalla flight controller tramite
+**SmartAudio** o **IRC Tramp**. Questo permette di cambiare canale, banda e potenza
+da Betaflight, dall'OSD negli occhiali o dal radiocomando.
+
+I controlli da verificare sono:
+
+| Problema | Controllo |
+|---|---|
+| Non riesci a cambiare canale | UART corretta in Betaflight e protocollo VTX giusto |
+| Potenza bloccata bassa | pit mode attivo o tabella VTX non configurata |
+| OSD ok ma niente video | cablaggio camera/VTX o canale errato sugli occhiali |
+| Video con righe a tutto gas | alimentazione rumorosa o condensatore assente |
+
+## Perché la VTX scalda
+
+Una VTX trasforma parte dell'energia in segnale radio e parte in calore. È normale
+che sia calda, soprattutto al banco, quando il drone è fermo e non c'è aria sulle
+componenti.
+
+Diventa un problema quando:
+
+- la VTX è accesa a potenza alta senza flusso d'aria;
+- l'antenna è assente, rotta o con connettore sbagliato;
+- è chiusa in un telaio senza ventilazione;
+- viene alimentata con tensione fuori specifica.
+
+Durante configurazione e test usa potenze basse o **pit mode**, e non lasciare il
+drone acceso a lungo fermo sul tavolo.
+
+## Antenne: contano più dei mW
+
+Una buona antenna può migliorare il video più di un aumento di potenza. Controlla
+sempre:
+
+- **connettore**: U.FL/IPEX, MMCX, SMA o RP-SMA devono combaciare;
+- **polarizzazione**: LHCP con LHCP, RHCP con RHCP;
+- **posizione**: lontana da carbonio, batteria e cavi di potenza;
+- **integrità**: un'antenna piegata o spezzata riduce molto la portata.
+
+Se usi digitale, vale lo stesso principio: antenne e posizionamento fanno una
+grande differenza.
+
+### Polarizzazione: lineare, LHCP e RHCP
+
+La **polarizzazione** descrive come oscilla il campo elettromagnetico emesso
+dall'antenna. Nel FPV trovi soprattutto tre famiglie:
+
+| Polarizzazione | Dove si usa | Pro | Contro |
+|---|---|---|---|
+| **Lineare** | micro droni, antenne leggere, alcune antenne stock | economica, leggera, semplice | soffre di più riflessioni e orientamento |
+| **LHCP** | digitale DJI/Walksnail/HDZero e molte build moderne | buona reiezione dei riflessi | deve combaciare con ricevente LHCP |
+| **RHCP** | analogico e setup FPV classici | diffusa e robusta | deve combaciare con ricevente RHCP |
+
+LHCP e RHCP sono polarizzazioni circolari: il segnale ruota in senso opposto. Se
+monti un'antenna **LHCP** sul drone e una **RHCP** sugli occhiali, il segnale
+arriva molto attenuato. Il video può ancora comparire da vicino, ma la portata
+crolla e aumentano gli sganci.
+
+La regola pratica è semplice:
+
+- antenna del drone e antenna ricevente devono avere la **stessa polarizzazione**;
+- se voli in gruppo, usare polarizzazioni opposte può aiutare a ridurre le
+  interferenze tra piloti su canali separati, ma non sostituisce una corretta
+  pianificazione dei canali;
+- non mescolare antenne lineari e circolari se cerchi la massima portata;
+- controlla la polarizzazione anche nei sistemi digitali: non tutti gli occhiali
+  e non tutte le unità video usano la stessa antenna stock.
+
+### Multipath: perché la circolare aiuta
+
+Quando voli vicino a muri, alberi, terreno o strutture metalliche, una parte del
+segnale rimbalza e arriva al ricevitore con ritardo e fase diversa. Questo effetto
+si chiama **multipath** e nell'analogico si vede come disturbo, righe e perdita di
+qualità. Le antenne circolari aiutano perché attenuano parte dei segnali riflessi
+con polarizzazione invertita.
+
+Per freestyle e bando in esterno, una coppia di buone antenne circolari coerenti
+tra drone e ricevitore di solito vale più di passare da 200 mW a 800 mW.
+
+## Analogico o digitale?
+
+| Sistema | Vantaggi | Svantaggi |
+|---|---|---|
+| **Analogico** | economico, leggero, compatibile con molte build | immagine bassa risoluzione e più disturbi |
+| **DJI O3/O4** | qualità video molto alta, registrazione a bordo | costo maggiore ed ecosistema chiuso |
+| **Walksnail** | buon compromesso tra qualità, peso e prezzo | compatibilità da verificare per ogni unità |
+| **HDZero** | latenza bassa, molto usato nel racing | qualità meno cinematica di DJI |
+
+Per una build economica o molto leggera, l'analogico ha ancora senso. Per un
+primo 5" moderno o un setup cinematic, il digitale è spesso la scelta più pratica.
+
+## FAQ
+
+### La VTX può funzionare senza antenna?
+
+No. Anche pochi minuti senza antenna possono danneggiarla, soprattutto a potenza
+alta.
+
+### Meglio aumentare la potenza o cambiare antenna?
+
+Prima cambia antenna e controlla il canale. Aumentare la potenza aiuta solo se il
+resto del sistema è già a posto.
+
+### Cos'è il pit mode?
+
+È una modalità a potenza molto bassa usata per configurare il drone senza
+disturbare altri piloti e senza scaldare troppo la VTX.
+
+### Perché vedo righe nel video quando do gas?
+
+Di solito è rumore elettrico: controlla massa, alimentazione della VTX, condensatore
+sulla LiPo e distanza dei cavi video dai cavi di potenza.
+
+### Qual è la potenza massima consentita in Italia senza patente radioamatoriale?
+
+Per il normale uso libero a 5.8 GHz, l'indicazione prudente è **25 mW e.i.r.p.**
+nella banda **5725-5875 MHz**, con apparati conformi CE. Potenze come 200, 400,
+800 mW o 1 W non vanno considerate libere solo perché selezionabili dalla VTX.
+
+### LHCP e RHCP possono funzionare insieme?
+
+Funzionano male. Da molto vicino potresti vedere comunque il video, ma con forte
+perdita di segnale. Per volare usa sempre stessa polarizzazione tra drone e
+ricevitore.
+
+## Approfondimenti
+
+- [Come iniziare con i droni FPV](/guide/primi-passi/come-iniziare-droni-fpv/)
+- [Come scegliere gli ESC](/guide/componenti/come-scegliere-gli-esc/)
+- [Dove scaricare i software di configurazione](/guide/configurazione/software-configurazione-droni/)

@@ -1,0 +1,148 @@
+---
+title: "Guida alla CLI di Betaflight"
+description: "Cos'è la CLI di Betaflight e come usarla: sintassi dei comandi, get/set/dump/diff, backup e ripristino delle impostazioni e compatibilità tra versioni."
+author: "Cerix"
+date: 2019-06-04
+updated: 2026-06-18
+tags: ["betaflight", "cli", "configurazione", "backup", "guida"]
+category: "guide"
+difficulty: "intermedio"
+image: "/images/guide/configurazione/guida-cli-betaflight/cover.png"
+sidebar:
+  order: 1
+draft: false
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+La **CLI** (Command Line Interface) di Betaflight permette di accedere a tutti i
+parametri della flight controller tramite comandi testuali. È un'alternativa
+all'interfaccia grafica che dà più controllo e precisione, e consente
+personalizzazioni che dai menu non sono possibili.
+
+## Perché usarla
+
+L'interfaccia grafica mostra solo le impostazioni più comuni, per restare semplice.
+La CLI invece ti fa **vedere e modificare ogni parametro** del firmware, fare il
+**backup** completo della configurazione e ripristinarla in caso di problemi.
+
+## Sintassi
+
+La sintassi base è:
+
+```
+[comando] [parametro] = [valore]
+```
+
+Esempio:
+
+```
+set align_gyro = DEFAULT
+```
+
+Per salvare le modifiche:
+
+```
+save
+```
+
+Per uscire senza salvare:
+
+```
+exit
+```
+
+### Maiuscole e spazi non contano
+
+La CLI non distingue maiuscole da minuscole, e gli spazi attorno all'uguale sono
+ignorati. Questi comandi sono tutti equivalenti:
+
+```
+set serialrx_inverted = on
+SET SERIALRX_INVERTED = ON
+set serialrx_inverted=on
+```
+
+## Consultare le impostazioni
+
+<Steps>
+
+1. **`dump`** mostra tutte le impostazioni del firmware con i valori attuali.
+
+2. **`diff`** mostra solo le impostazioni **diverse dai valori di default**:
+   l'elenco è molto più corto e leggibile.
+
+3. **`get [parametro]`** restituisce il valore di un parametro. Puoi usare solo le
+   prime lettere per avere tutti i parametri correlati:
+   ```
+   get serialrx
+   ```
+   restituisce sia `serialrx_inverted` sia `serialrx_duplex`.
+
+</Steps>
+
+## Backup e ripristino
+
+Regola pratica: **`diff` è l'uso quotidiano, `dump` è l'assicurazione**. Per il
+backup completo usa **`diff all`**: include anche le parti normalmente nascoste
+(resource/timer/DMA), quindi è la copia più sicura e ricostruisce tutta la config.
+
+**Backup (completo):** lancia `diff all` e copia tutto l'output in un file di testo.
+
+**Ripristino:** incolla il contenuto del file nella CLI, premi Invio, poi `save`
+prima di chiudere.
+
+<Aside type="caution">
+**Non ripristinare mai un backup su una board diversa** da quella che l'ha
+generato: le mappature hardware (resource) cambiano da scheda a scheda e
+rischieresti di mandare in conflitto i pin. Il backup vale per *quella* FC.
+</Aside>
+
+Per un backup che includa anche i **rate**:
+
+```
+rateprofile 0
+profile 0
+dump
+```
+
+Per i soli rate di tutti i profili:
+
+```
+rateprofile 0
+dump rates
+rateprofile 1
+dump rates
+rateprofile 2
+dump rates
+```
+
+<Aside type="caution" title="Attenzione alla versione">
+I backup sono compatibili solo con la stessa versione "minor" del firmware: un
+backup fatto con Betaflight 4.1.2 funziona con tutte le 4.1.x, ma **non** con le
+4.2.x. Tra major/minor molte voci cambiano nome o spariscono. Dopo un aggiornamento
+importante è buona norma riconfigurare da zero invece di reincollare un vecchio
+backup.
+</Aside>
+
+![Schema del versioning semantico](/images/guide/configurazione/guida-cli-betaflight/versioning-semver.jpg)
+
+## Comandi utili
+
+| Comando | Descrizione |
+|---|---|
+| `default` | Riporta la FC ai valori predefiniti e riavvia |
+| `dump` | Stampa tutte le impostazioni configurabili |
+| `diff` | Stampa solo le impostazioni diverse dai default (profilo PID corrente) |
+| `diff all` | Come sopra, ma per **tutti** i profili |
+| `get` | Legge il valore di un parametro |
+| `set` | Imposta il valore di un parametro |
+| `save` | Salva e riavvia |
+| `exit` | Esce senza salvare |
+| `status` | Mostra lo stato del sistema |
+| `version` | Mostra la versione del firmware |
+| `help` | Elenca tutti i comandi |
+
+<Aside type="note">
+Riferimento ufficiale: [Command Line Interface (CLI) | Betaflight](https://betaflight.com/docs/development/Cli).
+</Aside>

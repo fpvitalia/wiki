@@ -1,0 +1,563 @@
+/* FPV Italia - override colori e stili Starlight
+   Accent azzurro "Azzurri" (tech/pulito + colore nazionale italiano).
+   Tinte calibrate per contrasto AA sia in dark che in light mode.
+   L'italianità esplicita è nel logo (micro-barra tricolore). */
+
+/* Font del brand: Inter (variabile, self-hosted via @fontsource - niente
+   chiamate a Google). Starlight mantiene lo stack di sistema come fallback. */
+@import '@fontsource-variable/inter';
+
+:root {
+  --sl-font: 'Inter Variable', sans-serif;
+}
+
+/* Dark mode (default Starlight): link = accent-high (azzurro chiaro, AA su scuro) */
+:root {
+  --sl-color-accent-low: #0e2a52;
+  --sl-color-accent: #1366d6; /* bottoni/CTA con testo bianco - AA */
+  --sl-color-accent-high: #6cb2ff; /* testo link su sfondo scuro - AA ~7:1 */
+}
+
+/* Light mode: link = accent (azzurro scuro, AA su bianco) */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #c3dcff;
+  --sl-color-accent: #0b5cd6; /* testo link su bianco - AA ~5:1 */
+  --sl-color-accent-high: #0a3c8a;
+}
+
+/* Header: niente border-bottom, hairline reso con box-shadow (dark di default).
+   NB: solo il tag <header> della barra fissa (PageFrame); Header.astro usa un
+   <div class="header"> interno che NON deve avere lo shadow. */
+header.header {
+  border-bottom: none;
+  box-shadow: 0 0 0 1px rgb(34.98, 47.7, 69.96);
+}
+:root[data-theme='light'] header.header {
+  box-shadow: 0 0 0 1px rgb(229.5, 229.5, 229.5);
+}
+
+/* ---- Card prodotto affiliato ---- */
+.product-card {
+  display: flex;
+  gap: 1.25rem;
+  align-items: stretch;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.9rem;
+  padding: 1rem;
+  margin: 1.75rem 0;
+  background: var(--sl-color-black);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.product-card:hover {
+  border-color: var(--sl-color-text-accent);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.18);
+  transform: translateY(-2px);
+}
+
+/* media: immagine o placeholder con icona */
+.product-card__media {
+  flex-shrink: 0;
+}
+.product-card__img,
+.product-card__placeholder {
+  width: 140px;
+  height: 140px;
+  border-radius: 0.6rem;
+  background: var(--sl-color-gray-6);
+}
+.product-card__img {
+  object-fit: contain;
+  padding: 0.4rem;
+}
+.product-card__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sl-color-text-accent);
+  background:
+    radial-gradient(circle at 50% 35%, var(--sl-color-accent-low), transparent 70%),
+    var(--sl-color-gray-6);
+}
+
+/* corpo */
+.product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+  min-width: 0;
+}
+.product-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.product-card__title {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.25;
+}
+
+/* rating: stelle con riempimento proporzionale al voto */
+.product-card__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+.product-card__stars {
+  --pct: calc(var(--rating, 0) / 5 * 100%);
+  font-size: 0.95rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  background: linear-gradient(
+    90deg,
+    var(--sl-color-text-accent) var(--pct),
+    var(--sl-color-gray-5) var(--pct)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.product-card__stars::before {
+  content: '★★★★★';
+}
+.product-card__rating-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sl-color-text-accent);
+}
+
+.product-card__desc {
+  margin: 0;
+  color: var(--sl-color-gray-3);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* chip dei tag */
+.product-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.product-card__tag {
+  font-size: 0.72rem;
+  color: var(--sl-color-gray-2);
+  background: var(--sl-color-gray-6);
+  border-radius: 0.4rem;
+  padding: 0.15rem 0.5rem;
+}
+
+/* footer: prezzo + azioni */
+.product-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+.product-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+.product-card__price-label {
+  font-size: 0.75rem;
+  color: var(--sl-color-gray-3);
+}
+.product-card__price-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.product-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.product-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--sl-color-accent);
+  border-radius: 0.55rem;
+  background: var(--sl-color-accent);
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none;
+  transition: filter 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+.product-card__cta:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.product-card__cta--alt {
+  background: transparent;
+  color: var(--sl-color-text-accent) !important;
+}
+.product-card__cta--alt:hover {
+  filter: none;
+  background: var(--sl-color-accent-low);
+}
+
+.product-card__disclaimer {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  color: var(--sl-color-gray-4);
+}
+
+.product-card--missing,
+.product-link--missing {
+  color: #b91c1c;
+}
+
+/* impila su schermi stretti */
+@media (max-width: 30rem) {
+  .product-card {
+    flex-direction: column;
+  }
+  .product-card__media,
+  .product-card__img,
+  .product-card__placeholder {
+    width: 100%;
+  }
+  .product-card__img,
+  .product-card__placeholder {
+    height: 160px;
+  }
+}
+
+/* ---- Link affiliato inline ---- */
+.product-link {
+  font-weight: 600;
+}
+
+/* ===========================================================
+   Home page - stats, sezioni contenuti, CTA community
+   =========================================================== */
+
+/* full-bleed: evita lo scroll orizzontale dall'hero a tutta pagina */
+body {
+  overflow-x: clip;
+}
+
+/* Home (splash): l'hero parte attaccato all'header - rimuove il padding-top
+   di 1.5rem del .content-panel che lo contiene (solo dove c'è l'hero). */
+.content-panel:has(.fpv-hero) {
+  padding-block-start: 0;
+}
+
+/* Card di Starlight (i 4 box della griglia sotto l'hero): bordi più
+   arrotondati, coerenti con .home-card e .product-card (0.75rem). */
+.card {
+  border-radius: 0.75rem;
+}
+
+/* ---- I 4 box-sezione cliccabili sotto l'hero ----
+   Replica il look delle Card di Starlight (icona in riquadro colorato,
+   2 colonne con effetto "stagger") ma con l'intera card cliccabile. */
+.home-cards {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 50rem) {
+  .home-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    --stagger-height: 4rem;
+    padding-bottom: var(--stagger-height);
+  }
+  /* le card pari scendono → layout dinamico come lo stagger di Starlight */
+  .home-cards > .home-cardlink:nth-child(2n) {
+    transform: translateY(var(--stagger-height));
+  }
+}
+.home-cardlink {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, calc(0.125rem + 1vw), 1rem);
+  padding: clamp(1rem, calc(0.125rem + 3vw), 2.5rem);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.75rem;
+  background-color: var(--sl-color-black);
+  text-decoration: none;
+  color: var(--sl-color-white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.home-cardlink:hover {
+  border-color: var(--sl-color-text-accent);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.2);
+}
+/* colore icona diverso per ogni card (come le Card di Starlight) */
+.home-cardlink:nth-child(4n + 1) {
+  --sl-card-border: var(--sl-color-orange);
+  --sl-card-bg: var(--sl-color-orange-low);
+}
+.home-cardlink:nth-child(4n + 2) {
+  --sl-card-border: var(--sl-color-purple);
+  --sl-card-bg: var(--sl-color-purple-low);
+}
+.home-cardlink:nth-child(4n + 3) {
+  --sl-card-border: var(--sl-color-green);
+  --sl-card-bg: var(--sl-color-green-low);
+}
+.home-cardlink:nth-child(4n + 4) {
+  --sl-card-border: var(--sl-color-red);
+  --sl-card-bg: var(--sl-color-red-low);
+}
+.home-cardlink__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+  font-size: var(--sl-text-h4);
+  line-height: var(--sl-line-height-headings);
+  color: var(--sl-color-white);
+}
+.home-cardlink__icon {
+  border: 1px solid var(--sl-card-border, var(--sl-color-gray-5));
+  background-color: var(--sl-card-bg, var(--sl-color-gray-6));
+  padding: 0.2em;
+  border-radius: 0.375rem;
+  flex-shrink: 0;
+}
+.home-cardlink__body {
+  font-size: clamp(var(--sl-text-sm), calc(0.5rem + 1vw), var(--sl-text-body));
+  color: var(--sl-color-gray-2);
+}
+
+/* riquadro "sezione in arrivo" (pagine indice senza contenuti) */
+.section-empty {
+  margin-top: 1rem;
+  padding: 1.75rem;
+  border: 1px dashed var(--sl-color-gray-5);
+  border-radius: 0.75rem;
+  color: var(--sl-color-gray-2);
+  text-align: center;
+}
+
+/* ---- Sezioni con griglia di card ---- */
+.home-section {
+  margin-top: 3rem;
+}
+.home-section__head {
+  margin-bottom: 1rem;
+}
+.home-section__title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.home-section__sub {
+  margin: 0.25rem 0 0;
+  color: var(--sl-color-gray-3);
+  font-size: 0.95rem;
+}
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.1rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.75rem;
+  background: var(--sl-color-black);
+  text-decoration: none;
+  color: var(--sl-color-white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.home-card:hover {
+  border-color: var(--sl-color-text-accent);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.18);
+  transform: translateY(-2px);
+}
+.home-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+.home-card__desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--sl-color-gray-3);
+  /* clamp a 3 righe */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.home-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  font-size: 0.78rem;
+  color: var(--sl-color-gray-4);
+}
+.home-card__meta > * + *::before {
+  content: '·';
+  margin-right: 0.4rem;
+}
+.home-badge {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.4rem;
+  color: var(--sl-color-text-accent);
+  background: var(--sl-color-accent-low);
+}
+
+/* ---- CTA community: banda a TUTTA LARGHEZZA (full-bleed, come l'hero) ---- */
+.home-community {
+  position: relative;
+  overflow: hidden;
+  margin-top: 3rem;
+  /* full-bleed: esce dal contenitore e copre l'intera larghezza viewport
+     (body{overflow-x:clip} evita lo scroll orizzontale) */
+  width: 100vw;
+  left: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-block: 3rem;
+  border-block: 1px solid var(--sl-color-accent);
+  /* doppio gradiente: glow azzurro dall'alto + tinta di base */
+  background:
+    radial-gradient(80% 140% at 50% -20%, rgba(108, 178, 255, 0.18), transparent 60%),
+    linear-gradient(180deg, rgba(19, 102, 214, 0.16), rgba(19, 102, 214, 0.04));
+}
+:root[data-theme='light'] .home-community {
+  background:
+    radial-gradient(80% 140% at 50% -20%, rgba(108, 178, 255, 0.35), transparent 60%),
+    linear-gradient(180deg, rgba(108, 178, 255, 0.22), rgba(108, 178, 255, 0.06));
+}
+/* contenuto centrato dentro la banda full-bleed */
+.home-cta__card {
+  max-width: 46rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  text-align: center;
+}
+.home-cta__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  color: var(--sl-color-text-accent);
+  background: var(--sl-color-accent-low);
+}
+.home-cta__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+.home-cta__text {
+  margin: 0 auto 1.5rem;
+  max-width: 34rem;
+  color: var(--sl-color-gray-2);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+.home-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.home-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--sl-color-accent);
+  border-radius: 0.6rem;
+  background: var(--sl-color-accent);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: filter 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+.home-cta__btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+/* secondaria: "ghost" trasparente con testo accent */
+.home-cta__btn--ghost {
+  background: transparent;
+  color: var(--sl-color-text-accent);
+}
+.home-cta__btn--ghost:hover {
+  filter: none;
+  background: var(--sl-color-accent-low);
+}
+
+/* ----------------------------------------------------------------------------
+   AdSense - blocco annuncio (componente <AdSense> + iniezione automatica via
+   rehype-adsense). Stili globali (non scoped) per valere su entrambi.
+   ------------------------------------------------------------------------- */
+.adsense {
+  margin: 2rem auto;
+  max-width: 100%;
+}
+.adsense--sidebar {
+  margin-block: 1rem;
+}
+.adsense__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 7rem;
+  padding: 1.5rem;
+  border: 1px dashed var(--sl-color-gray-4);
+  border-radius: 0.75rem;
+  background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+  color: var(--sl-color-gray-3);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.adsense__icon {
+  font-size: 1.4rem;
+  opacity: 0.5;
+}
+
+/* ---- Mobile: header non fisso in alto ----
+   Sotto il breakpoint sidebar di Starlight (50rem) la barra superiore non resta
+   "sticky": header e indice "In questa pagina" scorrono via insieme al contenuto.
+   Restano posizionati dentro .page, quindi il contenuto parte comunque sotto di
+   loro al caricamento; cambia solo che non sono più ancorati durante lo scroll.
+   Regole fuori da @layer: vincono sul position:fixed di Starlight. */
+@media (max-width: 49.9999rem) {
+  .page {
+    position: relative;
+  }
+  header.header {
+    position: absolute;
+  }
+  mobile-starlight-toc > nav {
+    position: absolute;
+  }
+  /* Anche il bottone hamburger ha un suo position:fixed: lo sgancio così
+     scorre via con l'header invece di restare floating in alto a destra. */
+  starlight-menu-button > button {
+    position: absolute;
+  }
+}

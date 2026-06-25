@@ -1,0 +1,116 @@
+---
+title: "Binding riceventi FrSky ACCST"
+description: "Procedura passo-passo per il binding delle riceventi FrSky con protocollo ACCST (D16), su radio FrSky e su radio non FrSky come RadioMaster."
+author: "Cerix"
+date: 2022-11-21
+updated: 2026-06-17
+tags: ["frsky", "accst", "binding", "riceventi", "radiomaster", "guida"]
+category: "guide"
+difficulty: "intermedio"
+image: "/images/guide/frsky/binding-riceventi-accst/cover.png"
+sidebar:
+  order: 2
+draft: false
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Questa guida spiega come bindare le riceventi FrSky con protocollo **ACCST**
+(D8/D16), sia su radio FrSky sia su radio non FrSky come RadioMaster.
+
+## Step 0: Aggiorna la ricevente
+
+Per prima cosa verifica che la ricevente **e** il modulo RF interno del
+radiocomando siano aggiornati all'ultimo firmware disponibile. Non c'è modo di
+sapere quale firmware è già installato sulla ricevente, quindi conviene fare il
+flash per essere certi della versione.
+
+Scarica il firmware dalla pagina ufficiale delle
+[riceventi FrSky](https://www.frsky-rc.com/product-category/receivers/).
+
+## Step 1: Binding Mode
+
+Alimenta la ricevente tenendo premuto il pulsante di **Binding** per qualche
+secondo. La ricevente entra in "Binding Mode" quando i LED **rosso e verde**
+restano accesi fissi (non lampeggianti).
+
+![Ricevente FrSky in Binding Mode](/images/guide/frsky/binding-riceventi-accst/01-binding-mode.png)
+
+Un LED **blu** fisso indica che la ricevente non sta usando il protocollo PPWM
+ma un'uscita digitale come SBUS o FPORT.
+
+<Aside type="tip">
+Per passare da PPWM a SBUS: a radiocomando spento, accendi la ricevente e tieni
+premuto il pulsante di binding per circa 4 secondi.
+</Aside>
+
+## Step 2: Binding della ricevente (radio FrSky)
+
+<Steps>
+
+1. Sulla radio FrSky entra nel **MENU** e premi **PAGE** fino alla pagina
+   **2 Model Setup** (il numero è in alto a destra).
+
+2. Scorri con la rotella fino alle impostazioni **Internal RF**.
+
+3. Imposta i parametri:
+   - **Mode:** ACCST D16
+   - **Channel Range:** CH1-16
+   - **Receiver No:** 01 (numero progressivo per identificare la ricevente, diverso per ognuna)
+   - **Failsafe mode:** No pulses
+
+   ![Model Setup, impostazioni Internal RF](/images/guide/frsky/binding-riceventi-accst/02-model-setup.png)
+
+4. Con la ricevente accesa in Binding Mode, premi **BIND**.
+
+5. Si apre una finestra per scegliere il numero di canali e la telemetria:
+   seleziona **Ch1-8 Telem ON**.
+
+   ![Selezione canali e telemetria](/images/guide/frsky/binding-riceventi-accst/03-select-channel.png)
+
+6. La radio cerca le riceventi disponibili. A differenza di ACCESS non c'è
+   conferma a schermo, ma il **LED rosso** sulla ricevente inizia a lampeggiare
+   quando il binding riesce.
+
+7. A binding completato, spegni e riaccendi la ricevente: il **LED verde fisso**
+   conferma il collegamento.
+
+</Steps>
+
+Se il binding non riesce, ripeti dallo **Step 1**.
+
+## Binding su radio non FrSky (RadioMaster)
+
+Su radio non FrSky la procedura è simile, ma cambia la scelta del protocollo.
+
+<Steps>
+
+1. Completa lo **Step 1** (ricevente in Binding Mode).
+
+2. Premi **MODEL** per accedere alle impostazioni del modello e vai in
+   **Model Setup → Internal RF**.
+
+   ![Model Setup su RadioMaster](/images/guide/frsky/binding-riceventi-accst/radiomaster-model-setup.png)
+
+3. RadioMaster ha un modulo interno multi-protocollo, quindi nel menu
+   **RF Protocol** trovi più scelte. Secondo la documentazione del modulo:
+   - riceventi X4R, X6R, X8R, XSR, XM+, SxR con firmware ACCST **> 2.0.x** →
+     seleziona **FrSkyX2 D16**;
+   - riceventi con firmware **1.x.x** → seleziona **FrSky**.
+
+4. Premi **BIND** e scegli **Ch1-8 Telem ON**.
+
+   ![Selezione canali su RadioMaster](/images/guide/frsky/binding-riceventi-accst/radiomaster-select-channel.png)
+
+5. La radio emette dei beep mentre cerca le riceventi. Il **LED rosso** sulla
+   ricevente lampeggia quando il binding riesce.
+
+6. Spegni e riaccendi la ricevente: il **LED verde fisso** conferma il
+   collegamento.
+
+</Steps>
+
+<Aside type="note">
+Riferimento: documentazione ufficiale del modulo multiprotocollo,
+[FrSky X2](https://www.multi-module.org/using-the-module/protocol-details/frsky-x2).
+</Aside>

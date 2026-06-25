@@ -1,0 +1,84 @@
+---
+title: "Attrezzatura da laboratorio per droni FPV"
+description: "Quali strumenti servono per assemblare e riparare droni FPV: saldatore, aria calda, stagno e flussante, pulizia, multimetro, alimentatore da banco e utensili."
+author: "fpvitalia"
+date: 2019-07-23
+updated: 2026-06-18
+tags: ["attrezzatura", "saldatura", "officina", "build", "guida"]
+category: "guide"
+difficulty: "principiante"
+image: "/images/guide/officina/attrezzatura-da-laboratorio/cover.webp"
+sidebar:
+  order: 2
+draft: false
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import ProductCard from '@/components/ProductCard.astro';
+import ProductLink from '@/components/ProductLink.astro';
+
+Per assemblare e riparare un drone FPV servono pochi strumenti essenziali. Il web
+è pieno di soluzioni e non è sempre facile capire cosa serve davvero: qui trovi una
+selezione ragionata, divisa per area di lavoro.
+
+## Saldatura
+
+Il saldatore è lo strumento numero uno: lo userai per i fili dei motori, le LiPo, i
+connettori e le riparazioni. Meglio uno **a temperatura regolabile** (idealmente
+200-450 °C), con punte intercambiabili.
+
+<ProductCard id="saldatore" />
+
+Per dissaldare componenti SMD e lavorare su schede serve invece una **stazione ad
+aria calda**.
+
+<ProductCard id="stazione_aria_calda" />
+
+### Consumabili per saldare
+
+Lo stagno giusto (lega 60/40, diametro fine) e un buon **flussante** fanno la
+differenza tra una saldatura "a pallina" e una pulita e lucida. La **treccia
+dissaldante** serve a togliere lo stagno in eccesso.
+
+<ProductCard id="stagno_saldante" />
+<ProductCard id="flussante_saldatura" />
+<ProductCard id="treccia_dissaldante" />
+
+<Aside type="tip">
+Dopo aver saldato con il flussante, pulisci le piazzole con
+<ProductLink id="alcool_isopropilico" />: rimuove i residui appiccicosi ed evita
+falsi contatti nel tempo.
+</Aside>
+
+## Supporto e visione
+
+Saldare tenendo in mano scheda e cavo è frustrante. Una **terza mano** con bracci
+regolabili tiene tutto fermo. Per i componenti minuti servono **pinzette
+antistatiche**.
+
+<ProductCard id="terza_mano" />
+<ProductCard id="pinzette_esd" />
+
+## Misura e collaudo
+
+Un **multimetro** serve a controllare tensioni, continuità e cortocircuiti: utile in
+ogni build e in ogni riparazione. Un **alimentatore da banco** regolabile permette
+di collaudare il quad in sicurezza (idealmente con uno smoke stopper) prima di
+collegare la LiPo.
+
+<ProductCard id="multimetro" />
+<ProductCard id="alimentatore_banco" />
+
+## Utensili
+
+Per smontare frame e motori servono **chiavi esagonali** delle misure tipiche FPV
+(1.5, 2, 2.5, 3 mm). Tienine sempre un set dedicato, di qualità: le viti dei droni
+si "spanano" facilmente con utensili scadenti.
+
+<ProductCard id="chiavi_esagonali_fpv" />
+
+<Aside type="note">
+Non serve comprare tutto subito: parti da **saldatore, stagno, flussante, pinzette
+e chiavi esagonali**, poi aggiungi aria calda, multimetro e alimentatore quando
+inizi a costruire e riparare di più.
+</Aside>

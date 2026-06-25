@@ -1,0 +1,87 @@
+---
+title: "Binding della ricevente FrSky X8R con Taranis"
+description: "Come bindare la ricevente FrSky X8R alla Taranis: preparazione, ponticelli, le 5 modalità di binding (D8/D16) e procedura passo-passo."
+author: "fpvitalia"
+date: 2019-08-01
+updated: 2026-06-17
+tags: ["frsky", "x8r", "taranis", "binding", "accst", "guida"]
+category: "guide"
+difficulty: "intermedio"
+image: "/images/guide/frsky/binding-ricevente-x8r/cover.jpg"
+sidebar:
+  order: 4
+draft: false
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Le istruzioni ufficiali per bindare la ricevente **X8R** alla **Taranis** sono
+piuttosto confuse. Qui trovi la procedura divisa in preparazione, scelta della
+modalità e binding vero e proprio.
+
+![Ricevente FrSky X8R](/images/guide/frsky/binding-ricevente-x8r/cover.jpg)
+
+## Preparazione
+
+**Ricevente (RX):**
+
+<Steps>
+
+1. Spegni l'RX.
+2. Rimuovi tutti i cavi dei servi.
+3. Inserisci i ponticelli (jumper) secondo la modalità scelta (vedi tabella sotto).
+4. Predisponi la ricevente per essere accesa tramite un cavo servo.
+
+</Steps>
+
+**Radiocomando (TX):**
+
+<Steps>
+
+1. Accendi la Taranis.
+2. Seleziona il modello desiderato (**MENU**).
+3. Entra nel menu di modifica (**PAGE**).
+4. Imposta la modalità (**D16**) e il numero di canali.
+5. Tieni RX e TX a una distanza maggiore di 1 metro.
+
+</Steps>
+
+![Menu di binding sulla Taranis](/images/guide/frsky/binding-ricevente-x8r/taranis-menu.png)
+
+## Scegli la modalità
+
+La X8R offre 5 modalità di binding, con diverse combinazioni di telemetria,
+Failsafe/ModelMatch, canali e ponticelli:
+
+| Modalità | Protocollo | Telemetria | Failsafe / ModelMatch | Canali | Ponticelli |
+|---|---|---|---|---|---|
+| 1 | D8  | Sì | No | CH1-CH8  | CH7-CH8 |
+| 2 | D16 | No | Sì | CH1-CH8  | CH3-CH4 |
+| 3 | D16 | No | Sì | CH9-CH16 | CH1-CH2 |
+| 4 | D16 | Sì | Sì | CH9-CH16 | [CH1-CH2] e [CH3-CH4] |
+| 5 | D16 | Sì | Sì | CH1-CH8  | nessuno |
+
+![Ponticelli per bindare in Modo 4](/images/guide/frsky/binding-ricevente-x8r/ponticelli-modo4.jpg)
+
+<Aside type="tip">
+Per l'uso più comune (D16 con telemetria e ModelMatch sui primi 8 canali) usa la
+**Modalità 5**, che non richiede alcun ponticello.
+</Aside>
+
+## Procedura di binding
+
+<Steps>
+
+1. Tieni premuto il pulsante **F/S** sulla X8R (salta questo passaggio per la
+   Modalità 1).
+2. Accendi la X8R inserendo il cavo di alimentazione.
+3. Premi **[Bind]** nel menu della Taranis.
+4. Attendi il segnale acustico e il **LED rosso lampeggiante** sulla ricevente.
+5. Spegni l'RX.
+6. Rimuovi i ponticelli.
+
+</Steps>
+
+<Aside type="note">
+Riferimento: [manuale ufficiale FrSky X8R (PDF)](https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/RX8R161216.pdf).
+</Aside>

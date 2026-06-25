@@ -1,0 +1,70 @@
+---
+// Override dell'hero Starlight (solo la homepage usa il frontmatter `hero`).
+// Markup + stile qui; la logica dell'animazione vive in src/scripts/heroTrails.ts
+// (più semplice da iterare). Sfondo full-bleed con base sempre visibile (no-JS).
+import Default from '@astrojs/starlight/components/Hero.astro';
+---
+
+<div class="fpv-hero">
+  <canvas class="fpv-hero__canvas" aria-hidden="true"></canvas>
+  <div class="fpv-hero__inner">
+    <Default />
+  </div>
+</div>
+
+<style>
+  /* full-bleed: la splash è centrata, quindi 100vw + left:50% tiene anche su
+     schermi grandi. body{overflow-x:clip} (in custom.css) evita lo scroll
+     orizzontale. */
+  .fpv-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    /* nessun padding sopra (l'hero parte attaccato all'header); spazio solo sotto */
+    padding-block: 0 clamp(3rem, 8vw, 6rem);
+    /* base sempre visibile (fallback no-JS) */
+    background-color: var(--sl-color-bg);
+    background-image: radial-gradient(
+      130% 130% at 50% -25%,
+      rgba(19, 102, 214, 0.32),
+      transparent 55%
+    );
+  }
+  :global(:root[data-theme='light']) .fpv-hero {
+    background-image: radial-gradient(
+      130% 130% at 50% -25%,
+      rgba(108, 178, 255, 0.4),
+      transparent 55%
+    );
+  }
+
+  .fpv-hero__canvas {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fpv-hero__inner {
+    position: relative;
+    max-width: 60rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    /* respiro sopra le scritte: su mobile il titolo non tocca l'header
+       (lo sfondo/canvas resta comunque attaccato all'header) */
+    padding-top: 20px;
+  }
+</style>
+
+<script>
+  import { initHeroTrails } from '../scripts/heroTrails';
+
+  const root = document.querySelector<HTMLElement>('.fpv-hero');
+  if (root) initHeroTrails(root);
+</script>

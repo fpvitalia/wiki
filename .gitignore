@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+
+# File temporanei editor (Kate, Vim, ecc.)
+*.kate-swp
+*.swp
+*~
+
+# Istruzioni interne per l'AI: NON pubblicare su GitHub
+CLAUDE.md
+
+# Config di deploy/infra (Traefik): non pubblica
+deploy/
+docker-compose.yml
+
+# Build/deploy: fuori dal repo pubblico (tenuti in locale)
+Dockerfile
+nginx.conf
+.dockerignore
+.github/workflows/

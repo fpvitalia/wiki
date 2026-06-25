@@ -1,0 +1,156 @@
+---
+title: "Come scegliere gli ESC per droni FPV"
+description: "Guida alla scelta degli ESC per droni FPV: amperaggio, firmware (BLHeli_S, AM32), protocolli DShot, 8 vs 32 bit, 4-in-1 e collegamento ai motori."
+author: "fpvitalia"
+date: 2019-07-01
+updated: 2026-06-18
+tags: ["esc", "componenti", "motori", "blheli", "dshot", "guida"]
+category: "guide"
+difficulty: "intermedio"
+image: "/images/guide/componenti/come-scegliere-gli-esc/cover.jpg"
+draft: false
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Gli **ESC** (Electronic Speed Control) pilotano i motori brushless del drone e ne
+controllano la velocità. Sceglierli bene è essenziale per avere un quad fluido,
+affidabile e performante.
+
+## Come funziona un motore brushless
+
+I motori dei droni non si collegano direttamente a una fonte di tensione. Il
+rotore non ha avvolgimenti: ha magneti permanenti che si orientano seguendo il
+campo magnetico variabile generato dagli avvolgimenti sullo statore.
+
+![Motore brushless visto dal basso](/images/guide/componenti/come-scegliere-gli-esc/motore-brushless.jpg)
+
+Quando la flight controller chiede di accelerare, l'ESC comanda la commutazione
+della corrente negli avvolgimenti, facendo "ruotare" il campo magnetico e quindi
+il motore.
+
+![Funzionamento del motore brushless](/images/guide/componenti/come-scegliere-gli-esc/funzionamento-motore.gif)
+
+## Amperaggio: il parametro più importante
+
+La prima cosa da valutare è l'**assorbimento massimo** in Ampere. Se l'assorbimento
+supera quello sopportato dall'ESC, si va incontro a surriscaldamento e rottura,
+e nei casi peggiori l'ESC può prendere fuoco in volo.
+
+Incidono sull'assorbimento:
+
+- la **grandezza dei motori** (diametro e altezza del rotore);
+- motori con **KV alti**;
+- **eliche pesanti** (diametro elevato e passo pronunciato).
+
+Sugli ESC trovi due valori:
+
+- **assorbimento di picco (burst):** il massimo sopportato per pochi secondi (~10 s);
+- **assorbimento continuo (continuous):** la corrente erogabile a lungo senza problemi.
+
+### Come scegliere l'amperaggio giusto
+
+Consulta le specifiche dei motori del costruttore per conoscere gli Ampere massimi,
+oppure i test pubblicati online. La regola pratica: prendi ESC **leggermente
+sovradimensionati** rispetto ai motori (es. motori da 25 A con ESC da 30 A).
+Sovradimensionare non crea problemi, costa solo un po' di più e pesa un po' di più.
+
+<Aside type="note" title="Errore comune">
+Gli Ampere dell'ESC non sono gli Ampere "applicati" ai motori: i motori assorbono
+la corrente che serve in quel momento, in base alle loro caratteristiche. L'ESC
+deve solo essere in grado di **sopportare** quella corrente.
+</Aside>
+
+### Attenzione ai test e alle batterie
+
+I test a banco mostrano spesso assorbimenti **superiori** a quelli reali in volo:
+muovere un'elica in aria pulita richiede meno sforzo che in aria turbolenta, e la
+FC non spinge mai i motori al 100% per tenere margine di stabilizzazione.
+
+Anche la **batteria** è un limite. Esempio: 4 motori che a banco assorbirebbero
+120 A, ma una LiPo 4S da 1300 mAh e 75C eroga circa 1,3 × 75 = ~98 A. Tienine conto
+quando dimensioni il setup.
+
+## Rumore elettrico
+
+Camera, VTX, FC e ricevente hanno bisogno di un'alimentazione **stabile e pulita**.
+Il rumore elettrico (tensioni e correnti che variano rapidamente) si riconosce
+subito come disturbi nel video, soprattutto a tutto gas. I produttori lo limitano
+con i condensatori, ma "più condensatori" non significa automaticamente meno
+rumore. È un aspetto cruciale: può fare la differenza tra un quad fantastico e uno
+ingovernabile.
+
+## Firmware
+
+Storicamente i firmware ESC erano due, **SimonK** e **BLHeli**; quest'ultimo è
+diventato lo standard. Oggi (2026) il panorama è questo:
+
+- **BLHeli_S** (ESC 8 bit): ancora diffusissimo, ma il firmware originale è fermo.
+  La community usa **Bluejay**, firmware open source che lo sostituisce e abilita
+  DShot300 e il RPM filtering anche sull'8 bit.
+- **AM32**: firmware **open source** per ESC a 32 bit, di fatto lo standard moderno
+  dopo che **BLHeli_32** (32 bit, codice chiuso) è stato dismesso.
+- **KISS / JESC**: firmware proprietari per ESC specifici.
+
+<Aside type="tip">
+Quando compri ESC nuovi oggi, orientati su schede **AM32** (32 bit) o **BLHeli_S
+compatibili Bluejay** (8 bit): sono i due ecosistemi supportati e aggiornati.
+</Aside>
+
+## 8 bit vs 32 bit
+
+Molti ESC economici usano ancora processori a 8 bit. I **32 bit** (basati su STM32)
+hanno più potenza di calcolo e abilitano funzioni come telemetria, RPM filtering
+più efficiente e cambio del senso di rotazione via software. Per una build nuova
+performante, i 32 bit sono la scelta di riferimento.
+
+## Protocolli ESC
+
+Il protocollo determina la velocità di dialogo tra FC ed ESC. Si è passati dal
+vecchio PWM (ritardo fino a 2 ms) ai protocolli digitali **DShot**, a latenza
+molto più bassa. Dal più vecchio al più recente:
+
+![Confronto dei protocolli ESC](/images/guide/componenti/come-scegliere-gli-esc/protocolli-esc.png)
+
+- PWM standard
+- Oneshot125 / Oneshot42
+- Multishot
+- **DShot** (DShot150, DShot300, DShot600, DShot1200)
+- Proshot
+
+Oggi lo standard è **DShot300/DShot600**, idealmente in versione **bidirezionale**
+(bidirectional DShot), che riporta gli RPM dei motori alla FC e abilita il
+**RPM filtering**: il filtraggio più importante introdotto in Betaflight negli
+ultimi anni. DShot1200 è ormai in disuso.
+
+## Tensione di ingresso (4S, 6S...)
+
+Con la diffusione delle batterie **6S (22,2 V)** sono usciti ESC che reggono questa
+tensione. Verifica sempre il voltaggio massimo: usare una **6S su un sistema pensato
+per 4S brucia tutto**.
+
+## Con o senza BEC (ESC "Opto")
+
+Alcuni ESC hanno un **BEC** integrato che fornisce 5 V per alimentare FC, RX e altri
+componenti. Quelli senza BEC si chiamano spesso **Opto**: usano un optoisolatore
+che separa il circuito di potenza da quello di segnale, riducendo il rumore. Gli
+Opto sono più leggeri e piccoli, ma richiedono un'alimentazione 5 V separata.
+
+## Collegare l'ESC al motore
+
+L'ordine dei tre fili del motore **non conta**: salda i tre cavi come ti è comodo.
+Se il motore gira nel verso sbagliato, basta invertire due fili qualsiasi, oppure
+cambiare il senso di rotazione via software (nella suite del firmware).
+
+## ESC 4-in-1
+
+I **4-in-1** integrano quattro ESC su una sola scheda, della dimensione di una FC,
+da impilare nello stack: cablaggio molto più pulito e peso centralizzato (migliore
+reattività). Lo svantaggio: se si rompe un canale, spesso va sostituita l'intera
+scheda. Oggi sono la soluzione più diffusa nelle build 5".
+
+## Quali ESC scegliere
+
+Per un 5" moderno punta a un **4-in-1 da 45-60 A, 32 bit (AM32)**, abbinato a uno
+stack con la FC. Verifica sempre voltaggio (4S/6S) e amperaggio rispetto ai tuoi
+motori, seguendo i criteri qui sopra.

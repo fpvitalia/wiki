@@ -1,0 +1,70 @@
+---
+// Blocco pubblicitario AdSense.
+//
+// Uso:  <AdSense placement="in-article" />            (usa lo slot di config)
+//       <AdSense placement="sidebar" adSlot="123..." /> (slot esplicito)
+//
+// Comportamento:
+//   - DEV  → placeholder grigio
+//   - PROD + slot configurato → annuncio reale <ins class="adsbygoogle">
+//   - PROD senza slot → non renderizza nulla (gestito dalle Auto Ads)
+//
+// `placement` = posizione/forma logica (in-article | sidebar | footer)
+// `adSlot`    = ID unità annuncio (data-ad-slot). Per "in-article" se omesso usa
+//               ADSENSE_SLOT_INARTICLE da src/config.mjs.
+import { Icon } from '@astrojs/starlight/components';
+import { ADSENSE_CLIENT as client, ADSENSE_SLOT_INARTICLE, ADSENSE_SLOT_FOOTER } from '@/config.mjs';
+
+interface Props {
+  placement?: 'in-article' | 'sidebar' | 'footer';
+  adSlot?: string;
+}
+
+const { placement = 'in-article', adSlot } = Astro.props;
+const CONFIG_SLOTS = { 'in-article': ADSENSE_SLOT_INARTICLE, footer: ADSENSE_SLOT_FOOTER };
+const slot = adSlot || CONFIG_SLOTS[placement] || '';
+
+const isDev = !import.meta.env.PROD;
+// Annuncio reale solo in produzione con publisher + slot configurati.
+const live = Boolean(client) && Boolean(slot) && import.meta.env.PROD;
+// Il placeholder si mostra solo in sviluppo/anteprima, mai agli utenti veri.
+const showPlaceholder = isDev;
+
+const format = placement === 'in-article' ? 'fluid' : 'auto';
+const layout = placement === 'in-article' ? 'in-article' : undefined;
+
+const labels: Record<string, string> = {
+  'in-article': 'Annuncio · in articolo',
+  sidebar: 'Annuncio · barra laterale',
+  footer: 'Annuncio · piè di pagina',
+};
+---
+
+{
+  (live || showPlaceholder) && (
+    <div class:list={['adsense', `adsense--${placement}`, 'not-content']}>
+      {live ? (
+        <Fragment>
+          <ins
+            class="adsbygoogle"
+            style="display:block; text-align:center;"
+            data-ad-client={client}
+            data-ad-slot={slot}
+            data-ad-format={format}
+            data-ad-layout={layout}
+            data-full-width-responsive="true"
+          />
+          <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </Fragment>
+      ) : (
+        <div class="adsense__placeholder" aria-hidden="true">
+          <Icon name="rocket" class="adsense__icon" />
+          <span>{labels[placement] ?? 'Spazio pubblicitario'}</span>
+        </div>
+      )}
+    </div>
+  )
+}
+
+<!-- Gli stili .adsense* sono globali in src/styles/custom.css, così valgono
+     sia per questo componente sia per i blocchi iniettati da rehype-adsense. -->

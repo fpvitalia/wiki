@@ -1,0 +1,140 @@
+---
+title: "Come configurare ExpressLRS (ELRS) su Betaflight: guida completa"
+description: "Guida step-by-step per configurare ExpressLRS su Betaflight 4.5 con radiocomando Radiomaster. Binding, impostazioni e risoluzione problemi."
+author: "fpvitalia"
+date: 2026-05-30
+updated: 2026-05-30
+tags: ["elrs", "betaflight", "guida", "radiocomando", "configurazione"]
+category: "guide"
+difficulty: "intermedio"
+readingTime: 12
+image: "/images/guide/elrs/configurare-elrs-betaflight/cover.jpg"
+draft: false
+---
+
+import ProductCard from '@/components/ProductCard.astro';
+import ProductLink from '@/components/ProductLink.astro';
+
+ExpressLRS (ELRS) è diventato il protocollo radio più popolare nel mondo FPV grazie alla sua latenza bassissima, alla portata eccellente e al fatto di essere completamente open source. In questa guida ti spiego come configurarlo da zero con Betaflight 4.5.
+
+## Cosa ti serve
+
+Prima di iniziare, assicurati di avere:
+
+- Un radiocomando compatibile ELRS (consiglio il <ProductLink id="radiomaster_tx15" />)
+- Una ricevente ELRS (come la <ProductLink id="happymodel_ep1" />)
+- Betaflight Configurator installato sul PC
+- Un cavo USB per collegare il flight controller
+
+<ProductCard id="radiomaster_tx15" />
+
+## Step 1: Aggiornare il firmware ELRS
+
+Il primo passo è assicurarsi che radiocomando e ricevente abbiano la stessa versione del firmware ELRS. Questo è fondamentale: versioni diverse non comunicano tra loro.
+
+### Sul radiocomando
+
+1. Scarica **ELRS Configurator** dal [sito ufficiale](https://www.expresslrs.org/)
+2. Collega il radiocomando via USB
+3. Seleziona il tuo modello (es. "Radiomaster TX15 MAX")
+4. Imposta la binding phrase, una parola segreta che collega radio e ricevente
+5. Clicca "Build & Flash"
+
+### Sulla ricevente
+
+1. Collega la ricevente al PC via UART (o usa il passthrough da Betaflight)
+2. In ELRS Configurator seleziona il modello della ricevente
+3. Inserisci la **stessa binding phrase** usata sul radiocomando
+4. Flash il firmware
+
+> **Consiglio**: usa sempre la binding phrase anziché il binding manuale con il pulsante. È più affidabile e non devi ripeterlo se cambi ricevente.
+
+## Step 2: Collegare la ricevente al flight controller
+
+La ricevente ELRS va collegata a una porta UART libera del flight controller. I collegamenti sono:
+
+- **TX della ricevente** → **RX della UART sul FC**
+- **RX della ricevente** → **TX della UART sul FC**
+- **5V** → **5V**
+- **GND** → **GND**
+
+Attenzione: i fili TX e RX si incrociano. Il TX della ricevente va nel RX del FC e viceversa.
+
+## Step 3: Configurare Betaflight
+
+### Porte (tab Ports)
+
+1. Apri Betaflight Configurator e connettiti al FC
+2. Vai nella tab **Ports**
+3. Sulla UART dove hai collegato la ricevente, attiva **Serial RX**
+4. Salva e riavvia
+
+### Configurazione (tab Configuration)
+
+1. Vai nella tab **Configuration**
+2. Nella sezione **Receiver**, imposta:
+   - Receiver Mode: **Serial (via UART)**
+   - Serial Receiver Provider: **CRSF**
+3. Salva e riavvia
+
+### Verifica (tab Receiver)
+
+1. Vai nella tab **Receiver**
+2. Accendi il radiocomando
+3. Dovresti vedere le barre dei canali che si muovono quando tocchi gli stick
+4. Verifica che i canali siano mappati correttamente (AETR o TAER)
+
+Se le barre non si muovono, controlla:
+- Che la binding phrase sia identica su radio e ricevente
+- Che i fili TX/RX non siano invertiti
+- Che la UART sia quella giusta
+
+:::tip[Bind anche da Betaflight]
+Con ricevente su **ELRS 3.4 o successivi** puoi metterla in binding direttamente dal
+pulsante **"Bind Receiver"** nella tab Receiver di Betaflight, senza toccare il
+drone. La binding phrase resta comunque il metodo più comodo e affidabile.
+:::
+
+## Step 4: Impostazioni consigliate ELRS
+
+Per ottenere il massimo da ELRS, ecco le impostazioni raccomandate:
+
+| Parametro | Freestyle | Racing | Long Range |
+|-----------|-----------|--------|------------|
+| Packet Rate | 250 Hz | 500 Hz | 50 Hz |
+| Telemetry Ratio | 1:8 | 1:16 | 1:2 |
+| Switch Mode | Hybrid | Full Res | Hybrid |
+| TX Power | 100 mW | 250 mW | 500 mW+ |
+
+Per il freestyle, 250 Hz è un ottimo compromesso tra latenza e portata. Per il racing puro, 500 Hz ti dà la latenza più bassa possibile.
+
+## Risoluzione problemi comuni
+
+### "La ricevente non si collega"
+
+- Verifica che la binding phrase sia identica (case sensitive!)
+- Aggiorna entrambi i firmware alla stessa versione
+- Prova a riflashare la ricevente via Betaflight Passthrough
+
+### "I canali sono invertiti"
+
+- In Betaflight, vai nella tab Receiver e cambia il channel map
+- ELRS usa di default AETR (Aileron, Elevator, Throttle, Rudder)
+
+### "Failsafe continuo"
+
+- Controlla i collegamenti fisici (saldature fredde?)
+- Verifica che la UART non sia condivisa con altri dispositivi
+- Prova una UART diversa
+
+## Radiocomandi consigliati per ELRS
+
+<ProductCard id="radiomaster_tx15" />
+<ProductCard id="radiomaster_pocket" />
+<ProductCard id="radiomaster_boxer" />
+
+## Conclusione
+
+ELRS è il futuro dei protocolli radio FPV: open source, prestazioni eccellenti, e compatibile con tutti i principali radiocomandi. Una volta configurato, non tornerai più indietro.
+
+Se hai domande, apri una discussione sul nostro [forum](https://forum.fpvitalia.com) o contribuisci a migliorare questa guida su [GitHub](https://github.com/fpvitalia/wiki).
